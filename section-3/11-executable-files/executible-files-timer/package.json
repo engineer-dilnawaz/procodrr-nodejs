@@ -1,0 +1,12 @@
+{
+  "name": "timer",
+  "bin": "app.js",
+  "scripts": {
+    "build:win": "pkg -t node16-win-x64 .",
+    "build:mac:intel": "pkg -t node16-macos-x64 .",
+    "build:mac:arm": "pkg -t node16-macos-arm64 ."
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  }
+}

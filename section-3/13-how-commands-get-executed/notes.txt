@@ -1,0 +1,3 @@
+1. to beautify echo $PATH 
+    we can use:- echo $PATH | tr ":" "\n" ---> here tr means transform
+2. 

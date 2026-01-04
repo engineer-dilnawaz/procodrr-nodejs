@@ -1,0 +1,13 @@
+{
+  "name": "customnode",
+  "version": "1.0.0",
+  "scripts": {
+    "build:mac:intel": "pkg -t node16-macos-x64 ."
+  },
+  "bin": {
+    "myExecutor":"./customNode.js"
+  },
+  "dependencies": {
+    "pkg": "^5.8.1"
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "scripts": {
+        "hi": "ls",
+        "dev": "node --watch app.js",
+        "notes": "below(start,test,restart,stop) commands are special which can be executed without run with npm",
+        "start": "node app.js",
+        "test": "whoami",
+        "restart": "node -v",
+        "stop": "git -v"
+    },
+    "dependencies": {
+        "axios": "*"
+    }
+}

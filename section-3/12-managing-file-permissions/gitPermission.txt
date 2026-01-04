@@ -1,0 +1,6 @@
+Git File Permission
+
+100644 => Normal File with non-executable permissions.
+100755 => Normal file with executable permissions.
+120000 => Symbolic link.
+040000 => Directory.

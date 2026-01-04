@@ -1,0 +1,3 @@
+Read => 4 => r
+Write => 2 => w
+Execute => 1 => x

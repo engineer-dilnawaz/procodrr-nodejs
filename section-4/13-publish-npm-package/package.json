@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "eng-maths": "^1.0.1"
+  }
+}
