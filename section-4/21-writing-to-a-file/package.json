@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "version": "1.0.0",
+  "name": "node-copy-cli",
+  "bin": {
+    "copy": "task.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@engineer.dilnawaz.khan/copy-cli": "^1.0.1"
+  }
+}

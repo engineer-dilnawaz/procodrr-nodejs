@@ -1,0 +1,42 @@
+Date:
+1/7/2026 at 12:41:20 AM
+
+Error Message:
+ENOENT: no such file or directory, open './imagse.png'
+
+Error Stack:
+Error: ENOENT: no such file or directory, open './imagse.png'
+    at async open (node:internal/fs/promises:640:25)
+    at async Object.readFile (node:internal/fs/promises:1277:14)
+    at async file:///Users/dilnawazkhan/Desktop/MyPersonal/Online%20Courses%20/procodrr-nodejs/section-4/21-writing-to-a-file/app.js:40:21
+
+----------------------------------------------------------------------------------------------------
+
+Date:
+1/7/2026 at 12:41:25 AM
+
+Error Message:
+ENOENT: no such file or directory, open './imagse.png'
+
+Error Stack:
+Error: ENOENT: no such file or directory, open './imagse.png'
+    at async open (node:internal/fs/promises:640:25)
+    at async Object.readFile (node:internal/fs/promises:1277:14)
+    at async file:///Users/dilnawazkhan/Desktop/MyPersonal/Online%20Courses%20/procodrr-nodejs/section-4/21-writing-to-a-file/app.js:40:21
+
+----------------------------------------------------------------------------------------------------
+
+Date:
+1/7/2026 at 12:43:13 AM
+
+Error Message:
+ENOENT: no such file or directory, open './imagse.png'
+
+Error Stack:
+Error: ENOENT: no such file or directory, open './imagse.png'
+    at async open (node:internal/fs/promises:640:25)
+    at async Object.readFile (node:internal/fs/promises:1277:14)
+    at async file:///Users/dilnawazkhan/Desktop/MyPersonal/Online%20Courses%20/procodrr-nodejs/section-4/21-writing-to-a-file/app.js:40:21
+
+----------------------------------------------------------------------------------------------------
+
