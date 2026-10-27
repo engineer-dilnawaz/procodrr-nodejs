@@ -1,0 +1,22 @@
+Limitations of Buffers
+	
+	When try to read a large/heavy file. Buffer loads the whole file in the RAM, and thus it makes the process slow. 
+
+	Therefore, we use Streams for reading/Writing large files.
+
+
+-------
+🚫 Limitations of Buffers in Node.js 💻
+
+🧱 What is the Limitation?
+When you use Buffer to read a file:
+import fs from "fs";const data = fs.readFileSync("large-file.txt");
+📌 It loads the entire file into RAM at once.
+
+⚠️ Problem
+🐢 Slows down the process (especially for large files).
+💥 Can crash the system or cause memory overflow if the file is too big.
+🧠 Not memory-efficient.
+
+🚀 Solution — Use Streams Instead!
+📦 Streams read data in chunks, not all at once:
