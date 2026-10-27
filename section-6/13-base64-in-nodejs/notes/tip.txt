@@ -1,0 +1,18 @@
+You can use the following command as well to get the base64 encoded data:
+>  base64 image.png
+
+If you want to get the URL of the image. Then you can use the following command:
+>  echo "data:image/png;base64,$(base64 image.png)"
+
+---
+You can use the following command as well to get the base64 encoded data:
+
+▎ base64 -i image.png
+
+If you want the data URI of the image, you can use the following command:
+
+▎ echo "data:image/png;base64,$(base64 -i image.png)"
+
+To copy the result straight to your clipboard, pipe it to pbcopy:
+
+▎ echo "data:image/png;base64,$(base64 -i image.png)" | pbcopy
