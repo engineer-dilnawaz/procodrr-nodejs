@@ -1,0 +1,35 @@
+📖 Readable Streams in Node.js
+Streams solve one of the biggest limitations of working with large files using Buffers.
+
+🧱 Why Not Just Use Buffers?
+❌ Limitation with Buffers:
+Cannot load files larger than 2 GiB using Buffer.
+Large file reading/writing puts pressure on RAM and increases CPU usage.
+✅ Streams to the Rescue:
+Streams process data in chunks instead of loading the entire file.
+Great for performance and memory efficiency.
+
+📥 Creating a Readable Stream
+To create a read stream in Node.js, we use the fs module (non-promises) because it directly supports streaming methods.
+import fs from "fs";
+// Creating a readable stream with 20KB chunk size
+const stream = fs.createReadStream("./ss.jpg", { highWaterMark: 20 * 1024 // 20KB per chunk
+});
+
+🎧 Listening to Stream Events
+A stream emits events that let us react as data comes in:
+stream.on("data", (chunk) => { console.log(chunk.byteLength); // 👀 Logs the size of each chunk});
+stream.on("end", () => {
+console.log("📦 File read completed!");
+});
+
+⚙️ Options in createReadStream()
+path: Path of the file to read.
+highWaterMark: Size (in bytes) of each data chunk.
+(Default: 64 KB for files)
+
+✅ Use Case
+Perfect when:
+Reading large media files
+Streaming logs
+Streaming data from APIs or file-based databases
