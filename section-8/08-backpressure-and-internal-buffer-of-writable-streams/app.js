@@ -1,23 +1,21 @@
 import fs from "fs";
 
-const reasStream = fs.createReadStream(
-  "/Users/dilnawazkhan/Downloads/nature.mp4",
-  {
-    highWaterMark: 1 * 1024 * 1024,
-  },
-);
+const writeStream = fs.createWriteStream("file.txt", { highWaterMark: 4 });
 
-// const writeStream = fs.createWriteStream("text.txt");
+let i = 1;
 
-// console.log(writeStream.writableHighWaterMark);
+write100As();
 
-console.time();
-const writeStream = fs.createWriteStream("nature.mp4");
-
-reasStream.on("data", (chunkBuffer) => {
-  writeStream.write(chunkBuffer);
+writeStream.on("drain", () => {
+  write100As();
 });
 
-reasStream.on("end", () => {
-  console.timeEnd();
-});
+function write100As() {
+  while (i <= 100) {
+    let hasSpace = writeStream.write(`b`);
+    i++;
+    if (!hasSpace) {
+      break;
+    }
+  }
+}

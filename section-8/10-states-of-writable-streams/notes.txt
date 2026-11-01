@@ -1,0 +1,85 @@
+🧵 Writable Stream States in Node.js
+Writable streams go through several internal states during their lifecycle. These states help you track whether a stream is ready, busy, or finished.
+
+✅ Writable (Initial) State
+The stream is ready to accept data and .write() operations can be performed.
+Check:
+console.log(stream.writable);
+// true = ready to write
+
+🧃 Corked State
+The stream is temporarily holding writes in a buffer. It won’t send them until you call .uncork().
+Useful when you want to batch writes for better performance.
+Check:
+console.log(stream.writableCorked);
+// 0 = not corked, > 0 = corked
+
+🛑 Ended State
+The stream has been signaled to end using .end().
+No new .write() calls are allowed, but it may still be flushing data.
+Check:
+console.log(stream.writableEnded);
+// true = end() has been called
+
+🏁 Finished State
+All data has been fully flushed, and the stream is totally done writing.
+The 'finish' event has been emitted.
+Check:
+console.log(stream.writableFinished);
+// true = flushed & finished
+
+🧠 Bonus Tip
+To safely perform cleanups after writing:
+writeStream.on("finish", () => {
+console.log("✔️ All writes complete.");
+});
+
+
+-----
+States of Writable Streams
+
+Writable(Initial) State -> Means we can write.
+    writeStream.writable() return true if we can write, else false
+    If the stream is ended we cannot write.
+
+Corked State
+    writeStream.writableCorked() -> 0 means not corked , > 0 means corked
+    writeStream.cork() -> Means data will load but cannot write
+    writeStream.uncork() -> makes it to uncorked(Normal) state, and loaded data will be written. 
+
+Ended State
+    It means the stream has got the signal to be ended, but does not guarantee that all data is flushed.
+    writeStream.writeableEnded.
+
+Finished State
+    This tell that the data has fully flushed to the destination.
+    It takes some milliseconds after the ended State.
+
+    we can check it through:
+        writeStream.writableFinished
+        writeStream.writableEnded
+
+It also has errored state and destory method
+
+
+---
+writableStream.writable
+
+default state is the internal buffer in initial state is true
+writableStream.writableCorked
+
+check a value is corked and uncorked value
+writableStream.writableFinished
+
+completed writing data in internal buffer and after write data in disk and take a some time after return true
+Method
+cork()
+
+cork is a method to use store or write a value in internal buffer Ram not Stores Value in Disk
+uncork()
+
+uncork() is a method to use send a value to disk after write a value in file
+end()
+
+end() data writing completed. if you not write a end method is writableStream every time waiting of internal buffer like data is come.. it's required. it can pass a string in this end method it is do two task write & end.
+Note: 0 mins Not Corked & 0 > Mins Largest Corked

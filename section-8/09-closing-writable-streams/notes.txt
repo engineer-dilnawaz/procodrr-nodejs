@@ -1,0 +1,98 @@
+1️⃣ Readable stream closes automatically
+
+A Readable stream (like fs.createReadStream) is connected to a finite data source (for example, a file).
+
+Node.js knows exactly when the source ends
+
+When all data is read:
+
+the end event is emitted
+
+the stream automatically releases the file descriptor
+
+the close event is emitted
+
+👉 You do NOT need to manually close a readable stream
+It closes itself because there is no more data to read.
+
+2️⃣ Writable stream does NOT close automatically (and why)
+
+A Writable stream (like fs.createWriteStream) is different:
+
+It does not know when you are done writing
+
+Data can come:
+
+now
+
+later
+
+from multiple places
+
+Node.js cannot “guess” when writing is finished
+
+💡 Design reason
+If writable streams closed automatically:
+
+you wouldn’t be able to write in chunks
+
+async writes would randomly fail
+
+piping and backpressure handling would break
+
+👉 So Node.js waits for YOU to explicitly say:
+
+“No more data is coming.”
+
+That’s why writable streams never close by themselves.
+
+The .end() method (how it works)
+
+To tell a writable stream that writing is finished, we call:
+
+writeStream.end();
+
+What .end() does internally
+
+.end() performs two actions:
+
+1️⃣ Signals that no more data will be written
+2️⃣ Flushes remaining buffered data to the file
+
+After that:
+
+the stream finishes writing
+
+the file descriptor is released
+
+the stream is closed
+
+
+----
+🛑 Closing Writable Streams in Node.js
+Writable streams should always be properly closed to prevent unnecessary memory usage. When a stream stays open, it continues to consume RAM even if you're done writing.
+
+✅ How to Close a Writable Stream?
+Use:
+writeStream.end();
+This signals that you’re done writing.
+After calling .end(), no more .write() calls are allowed.
+
+✍️ Optional: Pass Data in .end()
+You can also write small final data while closing the stream:
+writeStream.end("Final data here");
+
+🔔 Important Events After .end()
+
+finish 🏁
+Emitted when all data has been flushed to the underlying system.
+This event is triggered before the stream is fully closed.
+writeStream.on("finish", () => {
+console.log("Finished writing");
+});
+close 🚪
+Emitted when the stream and its underlying resources (like file descriptors) are completely closed.
+Always comes after the finish event.
+writeStream.on("close", () => {
+console.log("Stream closed");
+});
