@@ -1,0 +1,28 @@
+📘 More About Readable Streams
+Readable streams offer powerful tools and events to manage file or data reading operations. Here's a deeper dive into some important methods and lifecycle events.
+
+🔧 Common Methods
+readStream.setEncoding(encoding)
+Sets the character encoding (e.g., "utf-8") so chunks are returned as strings instead of buffers.
+readStream.destroy([error])
+Destroys the stream manually.
+Always fires the 'close' event.
+If an error is passed, the 'error' event is also triggered.
+
+📡 Important Events
+Event Name
+Description
+'open'
+Fired when the file descriptor is opened. Useful for setup actions.
+'ready'
+Stream is ready to be read from. HighWaterMark is filled.
+'readable'
+Data is ready to be pulled manually using .read().
+'data'
+Data starts flowing automatically if .on('data') is used.
+'end'
+No more data to read. Stream has finished.
+'close'
+Stream is fully closed (always fired at the end).
+'error'
+Fired only if an error occurs.
