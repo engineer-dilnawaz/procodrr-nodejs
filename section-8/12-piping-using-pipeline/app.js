@@ -1,4 +1,5 @@
 import fs from "fs";
+import { pipeline } from "stream";
 
 console.time();
 const readStream = fs.createReadStream(
@@ -7,25 +8,19 @@ const readStream = fs.createReadStream(
 
 const writeStream = fs.createWriteStream("nature.mp4");
 
-// readStream.on("data", (chunkBuffer) => {
-//   const hasSpace = writeStream.write(chunkBuffer);
+// readStream.pipe(writeStream);
 
-//   if (!hasSpace) {
-//     readStream.pause();
-//   }
-// });
-
-// writeStream.on("drain", () => {
-//   readStream.resume();
-// });
-
-// above can be reduced using pipe method like below
-readStream.pipe(writeStream); // it does the same thing as above
-
-// unpipe means stop the data transfer
 // setTimeout(() => {
-//   readStream.unpipe(writeStream);
+//   readStream.destroy('Something went wrong')
 // }, 100);
+
+// readStream.on('error', (error)=>{
+//   console.log('Error: ', error)
+// })
+
+pipeline(readStream, writeStream, (error) => {
+  console.log({ error });
+});
 
 readStream.on("end", () => {
   console.timeEnd();
