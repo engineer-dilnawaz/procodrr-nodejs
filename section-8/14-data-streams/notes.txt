@@ -1,0 +1,134 @@
+📥 Data Streams in Node.js
+When any Node.js process starts, it automatically comes with 3 default streams:
+
+🔹 1. stdin – Standard Input
+Used to read data (typically from the keyboard).
+Example: When you type ls in the terminal, that input is sent through stdin.
+process.stdin // Readable stream
+
+🔸 2. stdout – Standard Output
+Used to write data (standard normal output).
+Example: The list of files printed by ls is sent through stdout.
+process.stdout // Writable stream
+✅ console.log() internally uses process.stdout.write()
+🔍 Node.js docs confirm that console.log() → is built on top of stdout (with \n added at the end).
+
+🔺 3. stderr – Standard Error
+Used to write error messages or warnings.
+Behaves like stdout, but it’s separate so you can handle errors differently.
+process.stderr // Writable stream
+🧪 Try:
+console.error("This is from stderr!");
+
+🧾 File Descriptors (FDs)
+Each stream is associated with a number under the hood:
+stdin -> 0
+stdout -> 1
+stderr -> 2
+
+
+----
+Data Streams (IMP)
+
+When a process start it has 3 types of dta streams.
+stdin -> mostly read the data.
+stdout -> mostly write the data.
+stderr -> mostly write the data.
+
+All are duplex streams.
+
+We get all this streams in process object.
+
+
+// ReadAble Stream
+process.stdin
+
+// Writable Stream
+process.stdout
+process.stderr
+
+console.log() behind the scenes use stdout stream.
+stderr is similar to stdout and is only used for showing the errors and warnings.
+
+File Descriptor(fd):
+    stdin  -> 0
+    stdout -> 1
+    stderr -> 2
+
+
+-----
+
+General
+
+Every process in an operating system has three standard data streams:
+Standard Input (stdin)
+Standard Output (stdout)
+Standard Error (stderr)
+
+All three are duplex streams, meaning they can support both reading and writing.
+However, in most practical scenarios:
+stdin is used for reading input.
+stdout and stderr are used for writing output and error messages, respectively.
+
+To fully utilize their duplex nature, we’d need to write custom code that handles both reading and writing.
+
+
+Practical Example
+
+Let’s take bash as an example:
+When we type a command like ls, the bash process receives our input through its readable stdin stream.
+The bash process then writes the command’s output to its writable stdout stream.
+If we type an invalid command, bash writes the corresponding error message to the stderr stream.
+
+
+Why This Matters
+
+By understanding how these streams work, we can connect the streams of two different processes — for example, using the output of one process as the input to another.
+This concept forms the basis of Inter-Process Communication (IPC).
+
+
+💡 Task
+
+Create two Node.js programs where:
+The parent process spawns a child process.
+The child process reads data from a file and sends it to the parent via stdout.
+The parent process receives that data and writes it into another file.
+
+
+index.js (Parent)
+
+const { spawn } = require('childprocess');
+const { createWriteStream } = require('fs');
+
+const childProcess = spawn('node', ['child.js']);
+const writeStream = createWriteStream('parent.txt');
+
+// Pipe the child’s stdout (readable stream) into a writable file stream
+childProcess.stdout.pipe(writeStream);
+
+
+
+child.js (Child)
+
+const fs = require('node:fs');
+const process = require('node:process');
+
+const readStream = fs.createReadStream('approach.md', { encoding: 'utf-8' });
+
+// Pipe the file’s contents to the child’s stdout
+readStream.pipe(process.stdout);
+
+
+
+Flow of Execution
+index.js starts and spawns a child Node.js process that runs child.js.
+child.js reads the contents of approach.md using a readable stream.
+The child process sends this data through its standard output (stdout).
+The parent process captures the child’s stdout and writes it into parent.txt.
+Once complete, parent.txt contains the exact contents of approach.md.
+
+
+🧩 Concept Highlight
+
+This example demonstrates Inter-Process Communication (IPC) —
+the technique of connecting data streams between two processes so they can share information seamlessly.
