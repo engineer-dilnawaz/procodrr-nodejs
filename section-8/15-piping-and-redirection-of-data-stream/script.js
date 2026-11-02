@@ -1,0 +1,4 @@
+import process from "node:process";
+
+process.stdout.write("stdout: script.js\n");
+process.stderr.write("stderr: script.js\n");
