@@ -1,0 +1,30 @@
+📂 File Descriptor (FD) in Node.js
+A File Descriptor is a non-negative integer (0 or greater) that uniquely identifies an open file in the operating system.
+It acts like an address pointer to a file that the OS can use internally for read/write operations.
+
+🔢 Standard File Descriptors
+FD Stream Purpose
+0 stdin Input stream (keyboard)
+1 stdout Output stream (console)
+2 stderr Error stream (console)
+
+So, any opened file in Node.js will generally have a descriptor value ≥ 3.
+
+🛠️ How to Access File Descriptors in Node.js
+✅ Asynchronous:
+import fs from "fs";
+fs.open("file.txt", (err, fd) => {
+if (err) throw err;
+console.log(fd); // e.g., 3 or greater});
+✅ Synchronous:
+import { openSync } from "fs";
+const fd = openSync("file.txt");
+console.log(fd); // e.g., 3 or greater
+
+🧠 Why is it Important?
+Every open file (or stream) gets a file descriptor.
+Node uses this internally to track resources, especially in low-level I/O.
+It's useful when you need precise control (e.g., fs.read, fs.write, fs.close).
+
+
+-----
