@@ -1,0 +1,12 @@
+import fs from "fs/promises";
+
+const fileHandle = await fs.open("text.txt", "r+");
+
+const { buffer, bytesRead } = await fileHandle.read({});
+
+console.log(buffer.toString(), bytesRead);
+
+const { buffer: writtenBuffer, bytesWritten } =
+  await fileHandle.write(" - Hii");
+
+console.log(writtenBuffer, bytesWritten);
