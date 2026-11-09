@@ -1,0 +1,40 @@
+
+💻 What is Computer Networking?
+Before diving into computer networking, let’s first understand the basic concept of a network.
+
+🌐 What is a Network?
+A network is a group of interconnected devices (like computers, smartphones, servers, printers, etc.) that are linked together to share data and resources.
+🔗 Key Points:
+Devices in a network are called nodes.
+Networks can be:
+Wired (using physical cables like Ethernet)
+Wireless (e.g., Wi-Fi, Bluetooth)
+
+🖥️ What is Computer Networking?
+Computer Networking is the field and practice of designing, building, and managing these device networks.
+It enables computers and other devices to:
+🗣️ Communicate with each other
+📁 Share files
+🌍 Access the internet
+🖨️ Use shared resources like printers and servers
+
+✅ Summary
+Computer Networking is essential for modern computing — it connects devices, supports communication, and powers everything from your home Wi-Fi to global data centers.
+
+
+
+----
+What is a Network?
+
+    A network is a group of interconnected devices (like computers, servers, printers, smartphones, etc.) that are linked together to share data and resources.
+
+    -> Devices in a network are called nodes.
+    -> Networks can be wired (using cables) or wireless (like Wi-Fi).
+
+What is Computer Networking ?
+
+    Computer Networking is the field or process of designing, setting up, and managing a network where computers and devices can:
+    -> Communicate
+    -> Share files
+    -> Access the internet
+    -> Use shared resources (like printers, servers)

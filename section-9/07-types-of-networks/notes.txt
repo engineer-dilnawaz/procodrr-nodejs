@@ -1,0 +1,76 @@
+Network Type  | Full Form                 | Coverage Area        | Example                                
+| PAN           | Personal Area Network  | 1–10 meters          | Phone to Bluetooth speaker           
+| LAN           | Local Area Network        | Single building     | Office or home Wi-Fi                 
+| MAN         | Metropolitan Area Network | City or metro area   | City-wide cable TV or university campus 
+| WAN        | Wide Area Network         | Country/worldwide    | The Internet                            
+| SAN         | Storage Area Network    | High-speed storage   | Data center storage systems     
+| CAN        | Campus Area Network   | Campus/multiple LANs | College with many departments           
+| VPN          | Virtual Private Network   | Across Internet      | Secure work-from-home access
+
+
+----
+🌐 Types of Network
+Networks ko unke size, range, aur usage ke basis pe divide kiya jata hai.
+
+🔹 1. LAN (Local Area Network)
+📌 Definition:
+Chhoti jagah mein banaya gaya network — jaise ek ghar, school, ya office ke andar.
+🏠 Example:
+Office ke sare computers ek router se connected ho
+Ghar ka WiFi network
+📏 Range:
+Few meters to a few kilometers
+⚙️ Use:
+Fast, secure, aur low-cost network for internal communication
+
+🔹 2. MAN (Metropolitan Area Network)
+📌 Definition:
+Ek city level ka network — multiple LANs ko jodta hai within a city.
+🏙️ Example:
+City-wide broadband services
+Cable TV network
+📏 Range:
+Up to 50 km (approx.)
+⚙️ Use:
+City level communication — schools, colleges, and government offices in one city
+
+🔹 3. WAN (Wide Area Network)
+📌 Definition:
+Bahut bade area mein phela hua network — countries aur continents tak.
+🌍 Example:
+The Internet itself
+Bank ATMs network across India
+📏 Range:
+Thousands of kilometers
+⚙️ Use:
+Global communication, large-scale business connectivity
+
+🧩 Other Types (Special Purpose Networks)
+
+🔸 PAN (Personal Area Network)
+📌 Definition:
+Ek individual person ke around banaya gaya very short range network
+📱 Example:
+Bluetooth devices
+Tethering from mobile
+Smartwatch connecting to phone
+📏 Range:
+~10 meters
+
+🔸 BAN (Body Area Network)
+📌 Definition:
+Ek human body ke aas-paas bana network — mainly healthcare ke liye
+🩺 Example:
+Heart rate monitor
+Fitness tracker syncing to mobile app
+📏 Range:
+Few centimeters to meters
+
+🔸 CAN (Campus Area Network)
+📌 Definition:
+Ek campus mein (college, university, company) multiple buildings ke andar LANs ka combination.
+🏫 Example:
+IIT campus
+Company campus with multiple buildings
+📏 Range:
+Few kilometers, but larger than LAN and smaller than MAN

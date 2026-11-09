@@ -1,0 +1,61 @@
+🌐 Story of World Wide Web (WWW)
+📌 The Idea – 1989
+Tim Berners-Lee, ek scientist jo CERN (Switzerland) mein kaam karte the, unhone dekha ki researchers ko apne documents share karne mein bahut dikkat ho rahi thi.
+Problem: Kisi ek document se doosre pe directly jump karna possible nahi tha.
+💡 Tim ne socha: Kyu na ek aisa system banaya jaye jahan text ke through kisi aur text/document pe jump kiya ja sake?
+Isi idea se Hypertext ka concept aya – jahan ek text se link ke zariye doosre resource pe ja sakte ho.
+
+🛠️ Invention of the Web – 1990
+Tim ne khud hi kuch important tools banaye jo web ke foundation ban gaye:
+🔸 WorldWideWeb – Pehla web browser + editor (jisme webpage ban bhi sakta tha aur dekh bhi sakte the).
+🔸 info.cern.ch – Pehla web server.
+🔸 Pehla web page – jisme bataya gaya tha ki “Web kya hai aur kaise kaam karta hai”.
+Aur ye 3 concepts bhi diye:
+📄 HTML – Web pages banane ke liye.
+🔗 HTTP – Web pe data communicate karne ka protocol.
+🌍 URL – Kisi bhi resource/file ka address batata hai.
+
+🌐 The Web Goes Public – 1991
+CERN ne WWW ko public kar diya.
+Ab koi bhi jiske paas internet tha, website bana sakta tha aur duniya bhar ki websites access kar sakta tha.
+
+🚀 Growth Explosion – 1993–mid 90s
+1993: 🖼️ Mosaic launch hua – Pehla graphical browser → Jisne web ko visual aur easy banaya (ab sirf text nahi, images & layout bhi).
+1994 ke baad:
+🔎 Search engines aaye (Yahoo, Google)
+🛒 E-commerce shuru hua (Amazon, eBay)
+🎨 Web standards aaye – CSS, JavaScript, etc.
+
+📌 Summary
+World Wide Web ka maksad tha:
+“Information ko interconnected banana, easily accessible karna aur global collaboration possible karna.”
+Web = Hypertext + Internet = WWW 🌍
+
+
+----
+
+History of WWW
+
+    The Idea – 1989
+        Tim Berners-Lee, a scientist at CERN (Switzerland), noticed that researchers had trouble sharing documents.
+        He proposed a system to link documents using hypertext and access them over the Internet.
+    💡 His goal: Make information easily accessible and connected.
+
+    Invention of the Web – 1990
+    Tim built:
+        The first web browser/editor: WorldWideWeb
+        The first web server: info.cern.ch
+        The first web page: explained what the Web is
+        He introduced:
+            HTML – for creating web pages
+            HTTP – the protocol for web communication
+            URLs – to locate resources
+
+    The Web Goes Public – 1991
+        CERN made the web publicly available.
+        It allowed anyone with Internet access to create and access websites.
+
+    Growth Explosion – Mid-1990s
+        1993: Mosaic, the first graphical web browser, launched → made the Web visual and popular.
+        1994+: Websites, search engines (like Yahoo, Google), and e-commerce (Amazon, eBay) emerged.
+        Web standards evolved (CSS, JavaScript, etc.)

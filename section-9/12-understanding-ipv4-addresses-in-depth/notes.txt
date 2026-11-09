@@ -1,0 +1,191 @@
+📡 IPv4 Address & Subnet Mask – Easy Explanation
+🔹 What is an IP Address?
+IP = Internet Protocol.
+Ye ek unique identifier hota hai jo har device ko assign hota hai jab vo kisi network (Internet ya Local Network) se connect hota hai.
+Local networks me IP router assign karta hai, jabki mobile/broadband me IP ISP (Internet Service Provider) assign karta hai.
+Important: IP protocol ≠ IP address.
+Protocol = rules ka set
+Address = sirf uska ek part
+
+🔹 IPv4 Address Format
+IPv4 ek 32-bit binary number hota hai, jo 4 octets (8 bits each) me divide hota hai.
+Example (Binary):
+11000000 10101000 00000000 00000001
+Decimal me: 192.168.0.1
+Human readability ke liye decimal me likha jata hai.
+
+🔹 IPv4 Range
+Minimum: 0.0.0.0
+Maximum: 255.255.255.255
+Total unique addresses: 256⁴ = 4,294,967,296
+
+🔹 Reserved Address Range (IPv4 ki Limitations)
+127.0.0.0 – 127.255.255.255 → Reserved for Loopback Testing (internal device testing).
+Example:
+127.0.0.1 → Loopback address (localhost)
+Subnet mask: 255.0.0.0
+
+🔹 What is a Subnet Mask?
+Subnet mask ek 32-bit number hota hai jo IP ko Network Portion & Host Portion me divide karta hai.
+Example:
+IP: 192.168.1.10
+Subnet Mask: 255.255.255.0
+Binary: 11111111.11111111.11111111.00000000
+First 24 bits → Network, last 8 bits → Host
+
+🔹 CIDR Notation
+CIDR = Classless Inter-Domain Routing
+Short form me subnet mask likhne ka tareeka.
+Example:
+192.168.1.10/24
+/24 → first 24 bits network ke liye, baaki 8 bits host ke liye.
+Equivalent mask: 255.255.255.0
+
+💡 Quick Analogy:
+IP address ko ghar ka address samjho, aur subnet mask ko colony ka map jo batata hai kaunsa area kis colony ka hissa hai.
+
+
+==================
+
+🧠 What is IPv4?
+
+IPv4 is the 4th version of the Internet Protocol, used to identify devices on a network using a unique address.
+It’s like a home address on the internet.
+
+
+✅ IPv4 Address Format
+
+An IPv4 address looks like:
+
+192.168.1.1
+
+
+It has 4 parts, separated by dots (.).
+Each part is a number from 0 to 255.
+
+👉 So total format is:
+
+X.X.X.X   where X ∈ [0, 255]
+
+
+
+🧮 Why only up to 255?
+
+Each part is 8 bits (called an octet)
+👉 8 bits → 2⁸ = 256 values → 0 to 255
+
+So:
+
+IPv4 address = 8 bits + 8 bits + 8 bits + 8 bits = 32 bits
+
+
+That’s why IPv4 = 32-bit address.
+
+
+🌍 Total IPv4 Addresses?
+
+2³² = 4,294,967,296 addresses
+
+
+But not all are usable. Some are reserved.
+
+
+🧩 Classes of IPv4 (Based on First Octet)
+
+Class	Range	Usage
+
+A	1 – 126	Big networks (e.g. ISPs)
+B	128 – 191	Medium networks
+C	192 – 223	Small networks (home)
+D	224 – 239	Multicast (special use)
+E	240 – 255	Experimental (reserved)
+💡 Note: 127.x.x.x is reserved for loopback (e.g. 127.0.0.1 = localhost)
+
+
+🛡 Reserved Private IP Ranges
+
+These are not used on the internet, but inside private networks like home or office WiFi:
+
+Class	Private IP Range
+
+A	10.0.0.0 to 10.255.255.255
+B	172.16.0.0 to 172.31.255.255
+C	192.168.0.0 to 192.168.255.255
+
+If your router shows something like 192.168.1.1, now you know — it’s a private IP.
+
+
+📦 Subnetting
+
+IPv4 addresses are often written with a subnet mask, like:
+
+192.168.1.0/24
+
+
+Here /24 means:
+First 24 bits are the network
+Remaining 8 bits are for hosts
+
+It defines how many devices can be in that network.
+Subnetting helps divide a big network into smaller pieces.
+
+
+🔁 Special IPv4 Addresses
+
+Address	Use
+
+127.0.0.1	Loopback (your own PC)
+0.0.0.0	"Any" IP (unspecified)
+255.255.255.255	Broadcast to all devices
+169.254.x.x	Auto-IP (when DHCP fails)
+
+
+🧪 Example Breakdown
+
+Take IP: 192.168.10.15
+It’s in range 192.168.x.x → Private IP
+Binary form:
+
+      192 = 11000000  
+   168 = 10101000  
+   10  = 00001010  
+   15  = 00001111  
+   
+
+   Full 32-bit binary:
+
+      11000000.10101000.00001010.00001111
+   
+
+
+🚦 How Devices Communicate Using IPv4?
+Every device (phone, PC, printer) gets a unique IP
+When sending data, IP helps route that data
+Routers and gateways help forward packets to destination IPs
+
+
+🧠 Common Terms:
+
+Term	Meaning
+
+DHCP	Automatically gives IP addresses
+NAT	Converts private IPs to public IPs
+DNS	Converts domain names to IPs (like google.com → 142.250.182.238)
+
+
+🔄 IPv4 vs IPv6 (Brief)
+
+Feature	IPv4	IPv6
+
+Address size	32-bit	128-bit
+Format	192.168.0.1	2001:0db8:85a3::8a2e:0370:7334
+Total IPs	\4.3 billion	\340 undecillion (massive!)
+IPv6 exists because we are running out of IPv4 addresses 🌍
+
+
+✅ Summary
+IPv4 = 32-bit address (4 numbers from 0–255)
+Used to identify devices on the internet
+Has private/reserved/special IP ranges
+Subnetting helps manage big networks
+Slowly being replaced by IPv6 due to address exhaustion
