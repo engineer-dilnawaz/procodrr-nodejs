@@ -1,0 +1,64 @@
+📌 DNS Hijacking
+Definition:
+DNS Hijacking ek cyber attack / configuration manipulation hai jisme DNS (Domain Name System) ka data change karke users ko galat IP address par redirect kiya jaata hai — chahe wo malicious ho ya custom local server.
+
+🔹 How It Works
+Normal Case:
+Aap browser me domain type karte ho → DNS server IP address return karta hai → correct website open hoti hai.
+Hijacked Case:
+DNS records manipulate kiye jaate hain → wrong IP address return hota hai → user kisi aur site/server par pahunch jata hai.
+
+🔹 Types of DNS Hijacking
+Router Level Hijacking
+Router ka DNS setting change karke users ko fake DNS server pe redirect karte hain.
+Local DNS Hijacking (Your Example)
+Victim ke computer ke /etc/hosts (Linux/Mac) ya C:\Windows\System32\drivers\etc\hosts file me entry add karke specific domain ko custom IP pe redirect karte hain.
+Example (Your Case):
+sudo nano /etc/hosts
+
+192.168.1.9 www.cool.com
+Fir apne system pe port 80 me server run kiya:
+import http from "http";
+const server = http.createServer((req, res) =>
+{ res.end("Hello, World!");
+});
+server.listen(80, "0.0.0.0");
+Ab browser me www.cool.com open karoge to directly aapka local server ka content dikhega — chahe wo domain actually kahin aur point karta ho.
+Man-in-the-Middle (MITM) DNS Attack
+Network traffic intercept karke DNS responses modify kiye jaate hain.
+ISP Level Hijacking
+Internet Service Provider intentional ya accidental DNS redirection karta hai (ads/tracking ke liye).
+
+🔹 Common Goals of Attackers
+Phishing 🎯 → Fake login pages se credentials lena.
+Malware Spread 🦠 → Fake sites se malicious software download karwana.
+Ad Revenue Fraud 💰 → Users ko ads wale pages pe bhejna.
+Local Development / Testing 🛠 → Developers apne system pe custom domain ko local server se map karte hain (legitimate use case).
+
+🔹 Symptoms (Malicious Case)
+Websites galat load ho rahi hain.
+Browser me unwanted pop-ups / ads.
+HTTPS warnings ya certificate mismatch errors.
+
+🔹 Protection Measures
+✅ Change Default Router Password
+✅ Use Secure DNS (Google DNS: 8.8.8.8, Cloudflare: 1.1.1.1)
+✅ Enable DNSSEC
+✅ Keep OS & Router Firmware Updated
+✅ Check /etc/hosts or hosts File Regularly
+✅ Use Antivirus & Anti-malware Tools
+
+⚠️ Key Point:
+Agar /etc/hosts file change ho jaaye to DNS server ka role bypass ho jaata hai — aapke system par domain name directly manually set IP pe resolve hota hai. Legitimate testing me useful hai, lekin malicious actor ise phishing ya data theft ke liye bhi use kar sakte hain.
+
+
+
+----
+DNS Hijacking using host file
+
+    The hosts file is a local file on your computer that maps domain names to IP addresses. Your system checks it before using a DNS server.
+
+    By editing the hosts file, you can:
+        Redirect a website (e.g., send www.google.com to 127.0.0.1)
+        Block access to sites
+        Simulate domains for local development

@@ -1,0 +1,71 @@
+📓 Understanding Domain Name System (DNS)
+🌐 DNS kya hai?
+DNS (Domain Name System) ek translation service hai jo human-readable domain names (jaise www.google.com) ko IP addresses me convert karta hai.
+Computers ek dusre ko IP address se pehchante hain, par humans ke liye names yaad rakhna easy hota hai.
+🏛 Domain Hierarchy
+1️⃣ Root Level Domain (RLD)
+Represented by a dot (.)
+DNS ka sabse upar ka level.
+Managed by ICANN (Internet Corporation for Assigned Names and Numbers).
+Isme saare Top-Level Domains (TLDs) hote hain.
+Example: www.google.com. (last dot optional hai — browsers bina bhi samajh lete hain).
+2️⃣ Top-Level Domain (TLD)
+Examples: .com, .org, .net, .gov, .in
+Har TLD kisi specific organization ke under hota hai jo isko manage karti hai.
+Ye organizations apne TLD ke andar Second-Level Domains create karne ka right deti hain.
+3️⃣ Second-Level Domain (SLD)
+Example: google in google.com
+Ye TLD ke andar register hota hai.
+Ownership TLD registrars ke through milta hai.
+4️⃣ Subdomain
+Example: www in www.google.com
+Ye Second-Level Domain ke andar create hota hai.
+Multiple levels deep ho sakta hai:
+Example: mail.support.google.com
+📏 Important Rules
+Total length of a domain name (including dots) ≤ 255 characters.
+Har label (dot ke beech ka part) ≤ 63 characters.
+🛒 Domain Registration
+TLDs ka ownership authorized organizations ke paas hota hai, par wo direct public ko sell nahi karte.
+Domain Registrars (jaise GoDaddy, Namecheap, Hostinger) domains bechne aur manage karne ka kaam karte hain.
+Public in registrars ke through apna Second-Level Domain register kar sakti hai.
+⚡ Summary:
+DNS ek phonebook jaisa hai internet ka — naam se address find karta hai. Domain hierarchy Root → TLD → SLD → Subdomain hoti hai, aur rules ke according length restrictions hote hain.
+
+
+
+-----
+Understanding Domain Name System (DNS)
+
+    The Domain Name System (DNS) translates human-readable domain names (like www.google.com) into IP addresses that computers use to identify each other on the network.
+    
+    Domain Hierarchy
+
+        Root Level (RLD)
+            Represented by a dot (.)
+            It is the highest level in the DNS hierarchy
+            Managed by ICANN (Internet Corporation for Assigned Names and Numbers)
+            Contains all Top-Level Domains (TLDs)
+
+        Top-Level Domain (TLD)
+            Examples: .com, .org, .net, .gov, .in
+            TLDs are owned by organizations that have the authority to manage them
+            These organizations are allowed to create Second-Level Domains
+
+        Second-Level Domain
+            Example: google in google.com
+            Created under a TLD
+            Ownership of second-level domains is granted by TLD registrars
+
+        Subdomain
+            Example: www in www.google.com
+            Created under a second-level domain
+            Can be multiple levels deep (e.g., mail.support.google.com)
+
+    Important Rules
+        The total length of a domain name (including dots) cannot exceed 255 characters.
+        Each label (a part of the domain between dots) can be up to 63 characters long.
+
+    Domain Registration
+        While TLDs are owned by authorized organizations, they typically do not sell domains directly.
+        Instead, domain registrars (also known as brokers), such as GoDaddy, Namecheap, etc., handle the sale and management of second-level domains to the public.

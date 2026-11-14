@@ -1,0 +1,100 @@
+📌 IPv6 Addresses
+🔹 Quick Summary
+IPv6 ek 128-bit address format hai (IPv4 sirf 32-bit tha).
+Ye 8 groups me likha hota hai, har group me 4 hexadecimal digits, aur groups : (colon) se separated hote hain.
+Example:
+2001:0db8:0000:0000:0000:ff00:0042:8329
+
+🔹 IPv6 Format Rules
+Leading Zeros hata sakte ho
+0db8 → db8
+Consecutive zero groups ko :: se replace kar sakte ho (sirf ek baar).
+2001:db8:0:0:0:ff00:42:8329 → 2001:db8::ff00:42:8329
+Pure zero address → ::
+
+🔹 IPv6 Address Types (Aur Tumhara Test Result)
+GUA (Global Unicast Address) 🌍
+Internet pe routable hota hai.
+Usually 2 ya 3 se start hota hai.
+Stable GUA → kaafi time same rehta hai.
+Temporary GUA → privacy ke liye frequently change hota hai.
+✅ Tumhara Server Test:
+Firewall off ho to dono (stable & temporary) se dusre devices pe access milta hai.
+Temporary IPv6 Address 🔒
+Random hota hai, privacy ke liye banaya jaata hai.
+Short-lived hota hai, badal jaata hai kuch time me.
+✅ Server test me jab tak active hai, dusre devices se access mil jaata hai.
+Link-Local Address 🔗
+Always fe80::/10 se start hota hai.
+Sirf same LAN segment me kaam karta hai.
+❌ Tumhare dusre device se kaam nahi karega jab tak interface ID use na karo (%eth0 / %wlan0 style).
+
+🔹 IPv6 Browser Access
+Browser me IPv6 likhte time hamesha square brackets me likho:
+http://[2401:4900:1c60:2bec:27c8:957c:c489:1182]:4000
+
+🔹 Tumhara Server Example
+import http from "http";
+const server = http.createServer((req, res) =>
+{
+res.end("Hello, World!");
+});
+server.listen(4000, "::", () => {
+console.log("Server is listening on port 4000 (IPv6)");
+});
+Same Device: [koi bhi IPv6]:4000 se content mil gaya.
+Dusre Device (LAN):
+✅ Global IPv6 addresses → kaam kiya.
+❌ Link-local → kaam nahi kiya bina interface name ke.
+
+💡 Key Learning:
+IPv6 me ek device ke paas ek saath multiple IPs hote hain.
+Global → Internet & LAN pe use ho sakta hai.
+Temporary → Privacy ke liye, thoda time ke liye valid.
+Link-local → Sirf local segment me, special syntax ke saath.
+
+
+-----
+IPv6 Address
+
+    IPv6 Address – Quick Summary
+        IPv6 is a 128-bit IP address format (vs. 32-bit in IPv4).
+        It consists of 8 groups, each with 4 hexadecimal characters, separated by colons (:).
+        Example:
+        2001:0db8:0000:0000:0000:ff00:0042:8329
+
+    IPv6 Format Rules
+        Leading Zeros Can Be Removed:
+            0db8 → db8
+
+        Consecutive All-Zero Groups Can Be Replaced with :: (once only):
+            2001:0db8:0000:0000:0000:ff00:0042:8329
+            becomes
+            2001:db8::ff00:42:8329
+
+        All Zeros? Use :: Alone:
+            0000:0000:0000:0000:0000:0000:0000:0000 → ::
+
+    Types of IPv6 Addresses
+
+        GUA (Global Unicast Address):
+            Routable on the internet.
+            Starts typically with 2 or 3.
+            Blocked by firewall by default for security.
+
+        Temporary IPv6 Address:
+            Randomized for privacy; changes over time.
+
+        Link-Local Address:
+            Used for local communication (same LAN).
+            Always starts with fe80::/10.
+
+    🌐 Using IPv6 in Browsers
+
+        To access an IPv6 address directly in a browser, enclose it in square brackets:
+        http://[2001:db8::1]/
+
+    ⚠️ IPv6 and IPv4 Compatibility
+
+        If you disable IPv4, only websites that support IPv6 will be accessible.
+        Many websites still rely on IPv4, so full IPv6-only setups can limit access.
