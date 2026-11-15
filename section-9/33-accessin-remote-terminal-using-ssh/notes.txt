@@ -1,0 +1,67 @@
+🖥️ Remote Terminal Access using SSH
+🔑 SSH (Secure Shell)
+Ek network protocol jo hume ek computer ke terminal ko doosre computer se securely access karne deta hai.
+Yeh TCP pe based hai aur default port 22 use karta hai.
+
+⚙️ SSH Setup aur Installation
+Check SSH installed hai ya nahi
+ssh -V → SSH client ka version check karega
+dpkg -l | grep openssh-client → Client installed hai ya nahi
+dpkg -l | grep openssh-server → Server installed hai ya nahi
+Agar installed nahi hai toh:
+sudo apt update
+sudo apt install openssh-server
+Firewall allow karna (UFW)
+sudo ufw allow ssh
+SSH server ka status check
+sudo systemctl status ssh
+
+🌐 Network Details Check
+hostname -I → System ka IP address dega
+whoami → Current user ka username dega
+
+🔗 Connect karna (Client → Server)
+Ek terminal (client) se doosre system (server) pe login karne ke liye:
+ssh username@ipaddress
+Example:
+ssh aviral@192.168.1.9
+👉 Yahaan:
+aviral = server system ka username
+192.168.1.9 = server system ka IP address
+Phir woh password maangega aur access mil jaayega.
+
+🎯 Use Case
+Ek system pe SSH server run karo
+Dusre system se client use karke connect ho jao
+Bas ek hi terminal me tum dusre machine ko operate kar paoge (as if local ho).
+
+💡 Summary
+SSH secure remote access deta hai
+TCP port 22 use hota hai
+Client aur server dono systems me properly configure hone chahiye
+Once connected, full terminal access milta hai doosre computer pe
+
+
+----
+1. What is SSH?
+SSH stands for Secure Shell.
+It is a network protocol used to securely access and control another computer remotely.
+It allows us to execute commands on a remote computer through a terminal.
+Communication between the SSH client and server is encrypted.
+
+Example:
+You have a computer running Ubuntu.
+You can access its terminal from another computer using SSH.
+You can execute commands, manage files, install software and manage the server remotely.
+2. How SSH Works
+
+SSH uses two main components:
+SSH Client: The computer from which we want to access another computer.
+SSH Server: The computer that accepts SSH connections.
+
+Working flow:
+SSH client sends a connection request to the SSH server.
+SSH server verifies the client's authentication.
+Once authentication succeeds, a secure connection is established.
+The client can execute commands on the server remotely.
+bandit0

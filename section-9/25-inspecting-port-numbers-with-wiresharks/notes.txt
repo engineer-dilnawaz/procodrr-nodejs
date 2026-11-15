@@ -1,0 +1,33 @@
+🔍 Inspecting Port Numbers
+📌 Source aur Destination Port Concept
+Jab ek PC (source) se dusre PC (destination) ko request bhejte hain, to dono taraf IP address + Port number use hota hai.
+Example:
+Source IP: 192.168.0.4
+Destination IP: 192.168.0.5
+Server destination port: 80 (HTTP)
+
+⚡ Source Port Assignment
+Source (jo request bhej raha hai) ko bhi ek port number assign hota hai.
+Ye port dynamic/private range (49152 – 65535) me se hota hai.
+Matlab har request ek temporary port use karti hai.
+
+🛠 Inspect with Wireshark
+Wireshark jaisi tools se hum dekh sakte hain ki source port aur destination port kya assign hue hain har packet me.
+Example capture:
+Source → Destination: 192.168.0.4:50512 → 192.168.0.5:80
+Destination → Source: 192.168.0.5:80 → 192.168.0.4:50512
+
+🔄 Request–Response Cycle
+Step 1: Source (S) → Destination (D) request bhejta hai.
+Step 2: Response aane par D → S ban jaata hai (roles swap ho jaate hain).
+Isme IP + Port dono reverse ho jaate hain.
+
+🌐 Real-life Example (Browser → Website)
+Jab hum ek site kholte hain:
+Source = hamara browser/PC (ek random port assign hoga 49152–65535 se).
+Destination = website server (e.g., HTTP:80 ya HTTPS:443).
+Request → Destination jaati hai.
+Response aate hi destination (server) source ban jaata hai aur hume data milta hai.
+
+💡 Conclusion:
+Port numbers ki wajah se hi network me multiple requests ek saath manage ho paati hain bina confuse hue — kyunki har connection ka ek unique (Source IP + Source Port, Destination IP + Destination Port) combination hota hai.

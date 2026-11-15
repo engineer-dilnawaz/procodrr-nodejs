@@ -1,0 +1,78 @@
+📌 What is Firewall?
+Firewall ek network security system hai jo incoming (inbound) aur outgoing (outbound) traffic ko monitor aur control karta hai, rules ke basis par.
+Ye ek security gatekeeper ki tarah kaam karta hai jo decide karta hai ki traffic andar/bahar jaane dena hai ya block karna hai.
+
+🌐 Types of Network Profiles
+Public Network
+Open places jaise coffee shop Wi-Fi
+⚡ Sabse strict rules
+Device discovery (sharing, file transfer) band hota hai
+Private Network
+Trusted network jaise ghar ka Wi-Fi
+Rules thode relaxed
+Device discovery allowed hota hai (printer, file sharing)
+Domain Network
+Enterprises/Offices ke liye
+Rules aur security organization ke server se centrally managed
+
+🔄 Inbound vs Outbound Rules
+Inbound Rules (Incoming Traffic) 🚪
+Ye decide karte hain bahar se andar aane wale connections allowed honge ya nahi.
+Default: Mostly Blocked (security ke liye).
+Example:
+Agar koi bahar ka computer aapke system pe RDP (Remote Desktop) se connect karna chahe → Inbound rule decide karega allow hoga ya block.
+Agar aapko server chalana hai (jaise web server on port 80) → toh inbound rule set karna padega taki external users access kar saken.
+Outbound Rules (Outgoing Traffic) 🌐
+Ye decide karte hain andar se bahar jaane wale connections allowed honge ya nahi.
+Default: Mostly Allowed (taki hum easily websites open kar saken).
+Example:
+Jab aap browser se google.com kholte ho → request aapke system se bahar jaati hai (outbound).
+Agar outbound block hota toh aap internet surf hi nahi kar pate.
+Lekin enterprise networks outbound rules restrict karte hain (jaise employees sirf official apps use karein, torrents block ho).
+👉 Summary:
+Inbound = Bahar se andar (default block 🔒)
+Outbound = Andar se bahar (default allow ✅)
+
+🕵️ Deep Packet Inspection (DPI)
+Advanced firewalls ek step aur aage jaake packet ke content ko inspect karte hain (sirf headers nahi).
+Malicious, suspicious, ya unauthorized content ko block karne me helpful.
+Example: Malware, spam, aur VPN tunneling detect karna.
+
+💡 Quick Recap:
+Firewall = Security gatekeeper 🚪
+Public = Sabse zyada secure
+Private = Home friendly
+Domain = Enterprise control
+Inbound = Bahar se andar aana control karta hai (default block)
+Outbound = Andar se bahar jaane ko control karta hai (default allow)
+DPI = Packet ke andar tak checking
+
+
+----
+What are firewall ?
+
+    A firewall is a network security system that monitors and controls incoming (inbound) and outgoing (outbound) traffic based on rules.
+
+    Types of Network Profiles
+
+        Public Network
+            Used in open/public places (e.g., coffee shop Wi-Fi)
+            Most secure: strictest firewall rules
+
+        Private Network
+            For trusted networks (like home Wi-Fi)
+            Less strict, allows device discovery
+
+        Domain Network
+            For office or enterprise networks (managed by organization)
+
+    Inbound vs Outbound Rules
+        Type	    Default Behavior	Purpose
+        Inbound	    Mostly blocked	    Controls external traffic coming in
+        Outbound	Mostly allowed	    Controls internal traffic going out
+
+        Rules can be set to allow/block specific ports, apps, or IP addresses.
+
+    DPI (Deep Packet Inspection)
+        DPI is a technique used by advanced firewalls to inspect the contents of data packets (not just headers).
+        Helps in blocking malicious, suspicious, or unauthorized content.

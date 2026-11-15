@@ -1,0 +1,72 @@
+🖥️ MAC Address (Media Access Control Address)
+📌 Definition
+
+MAC Address = Unique hardware identifier jo har network interface (Wi-Fi, Ethernet, Bluetooth, etc.) ko manufacturer ke time assign hota hai.
+
+Format: 48-bit hexadecimal number (example: 00:1A:2B:3C:4D:5E).
+
+Har interface ka apna alag MAC address hota hai.
+
+🔑 Role of MAC Address
+
+Permanent Identity
+
+IP address change hota rehta hai (dynamic IP via DHCP).
+
+Lekin MAC address fix hota hai (hardware level).
+
+Isi wajah se device ko reliably identify kiya ja sakta hai LAN (Local Area Network) ke andar.
+
+Router ka DHCP Table
+
+Jab device router se connect hota hai:
+
+Router ek IP assign karta hai.
+
+Usko MAC ↔ IP mapping ke saath apni table me store karta hai.
+
+Next time jab wahi device connect ho, router MAC address dekh ke usko easily identify kar leta hai (aur kabhi-kabhi same IP bhi de deta hai).
+
+Communication in LAN
+
+Agar ek device ko same LAN me dusre device ko data bhejna hai, to actual delivery MAC address ke basis pe hoti hai, IP address ke nahi.
+
+IP address logical layer hai, lekin data delivery hardware level pe MAC address se hoti hai.
+
+📱 Example
+
+Ek laptop Wi-Fi aur Ethernet dono se connect ho sakta hai.
+
+Wi-Fi interface ka ek MAC address hoga (say 88:79:23:AF:91:CD).
+
+Ethernet interface ka ek alag MAC hoga (say 00:1B:44:11:3A:B7).
+
+Router dono ko alag-alag devices ki tarah treat karega, aur har ek ko alag IP assign karega.
+
+⚡ Key Point
+
+IP Address = Logical / Changeable (Dynamic)
+
+MAC Address = Physical / Permanent (Hardware based)
+
+👉 Isi liye jab bhi hum router ki connected devices list dekhte hain, sabka MAC address visible hota hai.
+
+
+
+-----
+What is MAC address
+
+    MAC Address stands for Media Access Control Address.
+    It is a unique identifier assigned to every network interface on a device.
+    
+    📌 Key Points:
+        ✅ 48-bit number (6 bytes)
+        ✅ Usually written in hexadecimal format
+        ✅ Separators can be:
+            Colons → 00:1A:2B:3C:4D:5E
+            Hyphens (Windows) → 00-1A-2B-3C-4D-5E
+            Dots (Cisco) → 001A.2B3C.4D5E
+
+        ✅ Each network interface (Wi-Fi, Ethernet, etc.) has a different MAC address
+        ✅ Routers use MAC addresses to identify and manage devices
+        ✅ Use ipconfig /all on Windows to view your MAC address (called Physical Address)

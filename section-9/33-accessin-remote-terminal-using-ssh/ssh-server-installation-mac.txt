@@ -1,0 +1,38 @@
+//Check if SSH is installed or not
+//(macOS ships with OpenSSH client + server built in, no install needed)
+ssh -V
+which ssh
+which sshd
+ls /usr/sbin/sshd
+
+//SSH installation
+//Not required on macOS. Optional: newer OpenSSH via Homebrew
+brew update
+brew install openssh
+
+//Check SSH server status ("Remote Login" = SSH server on macOS)
+sudo systemsetup -getremotelogin
+sudo launchctl list | grep ssh
+
+//Start SSH server (enable Remote Login, starts now + on every boot)
+sudo systemsetup -setremotelogin on
+//OR via GUI: System Settings > General > Sharing > Remote Login (toggle ON)
+//OR via launchctl
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+
+//Stop SSH server
+sudo systemsetup -setremotelogin off
+
+//Allow Firewall to connect SSH
+//Enabling Remote Login automatically allows SSH (port 22) through the macOS firewall
+//Check firewall status
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate
+//Explicitly allow sshd through the firewall
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/sbin/sshd
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp /usr/sbin/sshd
+
+//Find your Mac's IP (to connect from another machine)
+ipconfig getifaddr en0
+
+//Connect
+ssh username@ip-address

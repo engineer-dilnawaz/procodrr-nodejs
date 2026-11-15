@@ -1,0 +1,145 @@
+TCP and UDP: The Backbone of the Internet
+
+In this section, we discuss two of the most important protocols that form the backbone of the internet: TCP and UDP. Most other protocols are built on top of these two.
+
+
+What are TCP and UDP?
+TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are both Layer 4 (L4) protocols in the OSI model.
+Almost all internet protocols (except IP), such as HTTP, FTP, SMTP, and WebRTC, are based on TCP or UDP.
+TCP is used more frequently because it provides reliable data transfer.
+
+
+How TCP Works
+TCP is designed to transfer data efficiently and reliably from one point to another.
+It uses a process called the 3-way handshake to establish a connection:
+SYN: Computer A sends a SYN (synchronize) message to Computer B.
+SYN-ACK: Computer B responds with a SYN-ACK (synchronize-acknowledge).
+ACK: Computer A sends an ACK (acknowledge) back to Computer B.
+After the handshake, a session is established, and data transfer begins.
+Large data is broken into smaller segments for transfer.
+TCP ensures that all data is received correctly. If any data is lost, it is resent.
+Both devices must follow the TCP protocol rules, regardless of their operating system (Windows, Mac, Android, etc.).
+In Node.js and most programming environments, TCP is implemented behind the scenes; developers just use it.
+
+
+How UDP Works
+UDP is used when reliability is not as important as speed.
+It is called "unreliable" because it does not guarantee data delivery.
+UDP is useful for real-time applications like video calls, where speed is more important than perfect accuracy.
+Data is sent in small pieces called datagrams.
+UDP does not check if the data reaches the destination; it just sends it to the given address.
+If some data is lost, the application (or user) must handle it (e.g., asking someone to repeat themselves in a call).
+UDP is mainly used for speed and low-latency communication.
+
+
+Real-World Examples
+TCP: Used for applications where data integrity is critical, such as file transfers, web browsing (HTTP/HTTPS), and emails.
+UDP: Used for applications where speed is more important, such as live video/audio streaming, online gaming, and video calls (WebRTC).
+
+
+Newer Protocols
+QUIC (Quick UDP Internet Connection): Developed by Google, QUIC is based on UDP and is used in HTTP/3.
+HTTP/3: The latest version of HTTP, built on top of QUIC (and therefore UDP).
+
+
+Protocol Layer Structure
+
+        IP
+      /    \
+   TCP     UDP
+             \
+            QUIC
+             |
+          HTTP/3
+
+HTTP/1 and HTTP/2 are built directly on TCP.
+HTTP/3 is built on QUIC, which uses UDP.
+
+
+Ports in TCP and UDP
+Both TCP and UDP have 2^16 (65,536) ports.
+Applications using TCP and UDP can run on the same port number without conflict because they are separate protocols.
+However, two TCP applications cannot use the same port at the same time.
+
+
+Summary
+TCP is reliable, connection-oriented, and used for most internet applications.
+UDP is fast, connectionless, and used for real-time or streaming applications.
+Understanding when to use TCP or UDP is crucial for building efficient network applications.
+
+
+----
+🚀 TCP aur UDP: Internet ke Backbone
+Duniya ka internet mainly do protocols pe depend karta hai: TCP aur UDP. Baaki saare major protocols (HTTP, FTP, SMTP, WebRTC etc.) in dono ke upar bante hain.
+
+🌐 TCP aur UDP kya hain?
+Dono Layer 4 (Transport Layer) protocols hain OSI model me.
+TCP (Transmission Control Protocol) → Reliable communication deta hai.
+UDP (User Datagram Protocol) → Fast aur lightweight hai, lekin reliable nahi.
+Internet me mostly TCP use hota hai, lekin real-time apps me UDP ki importance bahut hai.
+
+🔒 TCP kaise kaam karta hai?
+TCP ek connection-oriented protocol hai → Pehle connection establish, phir data transfer.
+3-Way Handshake (Connection Setup):
+SYN → Computer A ne connection start kiya.
+SYN-ACK → Computer B ne response diya.
+ACK → Computer A ne confirm kiya.
+Phir session start hota hai aur data segments me bheja jata hai.
+TCP ensure karta hai ki data lossless aur correct order me mile. Agar packet miss ho gaya toh retransmission hoti hai.
+
+⚡ UDP kaise kaam karta hai?
+UDP ek connectionless aur unreliable protocol hai.
+Sirf datagrams bhejte hain bina confirm kiye ki voh pahunch gaye ya nahi.
+Speed important hai, accuracy secondary.
+Agar packet lost ho jaye → Application handle kare (jaise video call me “repeat that again”).
+Use cases: Live streaming, video calls, online gaming.
+
+🌍 Real-World Examples
+TCP → Web browsing (HTTP/HTTPS), File transfer (FTP), Email (SMTP).
+UDP → Video calls (WebRTC), Online games, Live streaming.
+
+🔥 Latest Protocols
+QUIC (Quick UDP Internet Connection) → Google ne banaya, UDP par based.
+HTTP/3 → QUIC ke upar run karta hai (iska matlab HTTP/3 = UDP based).
+
+🎯 Ports in TCP/UDP
+Dono ke paas 65,536 ports (0–65535) hote hain.
+Same port number par TCP aur UDP alag-alag apps run kar sakte hain.
+Lekin ek hi port par do TCP apps ek sath run nahi kar sakte.
+
+📝 Summary
+TCP → Reliable, connection-oriented, ordered data.
+UDP → Fast, connectionless, thoda unreliable.
+TCP = Safety, UDP = Speed.
+Networking me samajhna zaroori hai ki kab TCP use karna hai aur kab UDP.
+
+
+-----
+
+TCP (Transmission Control Protocol):
+
+    TCP is a reliable, connection-oriented protocol used for sending data over the internet.
+
+    It ensures that data is delivered in order, without errors, and without loss.
+
+    Before sending data, it uses a 3-way handshake to establish a connection.
+
+    It uses acknowledgments, sequence numbers, and retransmissions to ensure reliability.
+
+    Commonly used in web browsing, emails, file transfers, and remote access.
+
+    Think of it like a phone call: both sides connect, talk in order, and confirm everything was heard.
+
+UDP (User Datagram Protocol):
+
+    UDP is a connectionless, fast, and lightweight protocol used for sending data.
+
+    It does not guarantee delivery, order, or error checking.
+
+    No handshake—data is just sent without setup.
+
+    It's faster than TCP but less reliable.
+
+    Commonly used in Live video/audio streaming, Online gaming, VoIP (Voice over IP)
+
+    Think of UDP like sending a letter without tracking—it might arrive, it might not, but it's quick and simple.

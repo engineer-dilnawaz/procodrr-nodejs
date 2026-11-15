@@ -1,0 +1,185 @@
+🛰️ OSI Model (Open Systems Interconnection Model)
+Definition:
+OSI ek conceptual framework hai jo explain karta hai ki data kaise ek device se dusre device tak travel karta hai, 7 layers ke through.
+
+🏛 Layers of OSI Model (Top → Bottom)
+7. Application Layer
+End-user ke closest layer.
+Human-readable data handle karta hai (jaise form input, POST request).
+Example: Browser → Node.js server (username & password bhejna).
+Protocols: HTTP, HTTPS, FTP, SMTP.
+
+Presentation Layer
+Data ko transform karta hai → readable & secure form mein.
+Tasks:
+Serialization (e.g., JSON.stringify).
+Compression (data chhota karna).
+Encryption/Decryption (security ke liye).
+Example: HTTPS encryption, data compression.
+
+Session Layer
+Do devices ke beech connection/session manage karta hai.
+Session create/maintain/destroy karna.
+Example: TCP connections, remote login sessions.
+Data pe yaha koi change nahi hota.
+
+Transport Layer
+Data ko chhote segments mein todta hai.
+Port numbers assign karta hai (Source & Destination dono ke).
+Reliable delivery ensure karta hai (TCP) ya fast delivery (UDP).
+Example:
+Segment: Source Port 54321 → Destination Port 4000
+Service to Service delivery.
+
+Network Layer
+Segment + IP addresses add → Packet banata hai.
+Source & Destination IP assign hota hai.
+Example:
+TCP:54321
+Source IP: 192.168.0.5
+Destination IP: 142.3.4.1
+End to End delivery.
+
+Data Link Layer
+Packet + MAC addresses add → Frame banata hai.
+Source & Destination MAC assign hota hai.
+(Router ke MAC use hote hain, end device ke nahi).
+Example:
+Source MAC: 24-9A-43-2B
+Dest. MAC: 1A-42-F9-4B
+Hop to Hop delivery.
+
+Physical Layer
+Frames ko physical signals mein convert karta hai (electrical, optical, radio waves).
+Data cables, WiFi signals, fiber optics.
+Yehi se data device se physically nikalta hai.
+
+📦 Encapsulation & Decapsulation
+Encapsulation: Jab data Application layer → Physical layer tak jata hai, har layer apni info add karti hai.
+Decapsulation: Jab data destination device par aata hai, har layer apni info remove karke asli data Application tak pahuchati hai.
+
+🔑 Delivery Types
+Hop to Hop delivery → Data Link Layer (Layer 2).
+End to End delivery → Network Layer (Layer 3).
+Service to Service delivery → Transport Layer (Layer 4).
+
+📌 Important Notes
+Node.js app → Application layer mein hoti hai, lekin indirectly Presentation, Session & Transport layer concepts ko bhi use karti hai.
+OSI model = theoretical model.
+Practically hum mostly TCP/IP model use karte hain.
+
+
+----
+
+OSI Model
+
+    The OSI Model (Open Systems Interconnection Model) is a conceptual framework that defines how data travels through a network in 7 layers. Each layer has a specific role in moving data from one device to another.
+
+    The 7 Layers of the OSI Model (Top to Bottom)
+
+    7. Application Layer
+
+        What it does:
+        Directly interacts with end users. It provides services and interfaces for applications to access the network.
+
+        Functions:
+            File transfers
+            Email
+            Web browsing
+            Network management
+
+        Examples:
+            HTTP, HTTPS
+            FTP
+            SMTP
+            DNS
+            Telnet
+
+    6. Presentation Layer
+
+        What it does:
+        Formats or translates data for the Application Layer. Handles encryption, decryption, and compression.
+
+        Functions:
+            Converts data into readable formats (e.g., text, image, video)
+            Applies encryption (SSL/TLS)
+            Compresses data for efficient transfer
+
+        Examples:
+            SSL/TLS
+            JPEG, MP4, GIF
+            ASCII, EBCDIC
+
+    5. Session Layer
+
+        What it does:
+        Manages and controls dialogues (sessions) between two computers. Keeps sessions open, manages logins, and synchronizes.
+
+        Functions:
+            Establish, maintain, and terminate sessions
+            Session checkpoints (for data recovery)
+
+        Examples:
+            NetBIOS
+            RPC (Remote Procedure Call)
+            PPTP (for VPN)
+
+    4. Transport Layer
+
+        What it does:
+        Provides reliable or unreliable delivery of data with error checking and flow control.
+
+        Functions:
+            Divides data into segments
+            Ensures complete and correct data
+            Handles retransmission if needed
+
+        Examples:
+            TCP (Reliable, ordered)
+            UDP (Faster, no guarantee of delivery)
+
+    3. Network Layer
+
+        What it does:
+        Handles routing of data from source to destination using logical addresses (IP).
+
+        Functions:
+            Logical addressing (IP)
+            Path selection & routing
+            Packet forwarding
+
+        Examples:
+            IP (IPv4/IPv6)
+            ICMP (ping, traceroute)
+            Routers operate here
+
+    2. Data Link Layer
+
+        What it does:
+        Transfers data between devices on the same network and detects/corrects errors in the physical layer.
+
+        Functions:
+            Frames data for transmission
+            Adds MAC addresses
+            Handles error detection (CRC)
+
+        Examples:
+            Ethernet
+            MAC address
+            Switches, Bridges
+            PPP, ARP
+
+    1. Physical Layer
+
+        What it does:
+        Transmits raw bits (0s and 1s) over the physical medium (cable, air, fiber).
+
+        Functions:
+            Voltage levels, data rates
+            Physical connectors, cabling
+            Bit-by-bit delivery
+
+        Examples:
+            Cables (Ethernet, fiber)
+            Hubs, Repeaters
+            Wi-Fi signals, Bluetooth, Modems

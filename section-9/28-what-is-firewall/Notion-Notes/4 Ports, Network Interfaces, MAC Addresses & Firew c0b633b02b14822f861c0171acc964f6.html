@@ -1,0 +1,815 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>4. Ports, Network Interfaces, MAC Addresses &amp; Firewalls</title><meta name="data-notion-page-icon" content="/icons/server_blue.svg"/><link rel="icon" href="https://app.notion.com/icons/server_blue.svg"/><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="c0b633b0-2b14-822f-861c-0171acc964f6" class="page sans" data-notion-page-icon="/icons/server_blue.svg"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://app.notion.com/icons/server_blue.svg"/></div><h1 class="page-title" dir="auto">4. Ports, Network Interfaces, MAC Addresses &amp; Firewalls</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><blockquote id="304633b0-2b14-82ac-852b-815545c01fcd" class="" dir="auto">The <strong>IP address</strong> gets data to the right machine. The <strong>port number</strong> gets it to the right program on that machine. A <strong>network interface</strong> is one of the machine&#x27;s connections to a network, a <strong>MAC address</strong> is the hardware ID of one network card, and a <strong>firewall</strong> decides which traffic may pass.</blockquote><h2 id="77e633b0-2b14-8347-93e6-01434061a9cd" class="" dir="auto">🤔 The Problem</h2><p id="ede633b0-2b14-8210-aa37-8153af1675ba" class="" dir="auto">One server runs many programs at once: a web server, a database, SSH. A packet that reaches the right IP still needs to reach the right program, so every service listens on its own port. And when your API &quot;works on my machine but not from my phone&quot;, the cause is almost always one of three things on this page: the port, the address the server listens on, or a firewall.</p><table id="b1d633b0-2b14-8337-8908-8189979780cf" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="1e7633b0-2b14-8230-96dd-810d4875ce43" dir="ltr"><th id="AKBV" class="simple-table-header-color simple-table-header">Term</th><th id="]naT" class="simple-table-header-color simple-table-header">One line</th></tr></thead><tbody><tr id="1c3633b0-2b14-83ca-b333-8138997b2d7c" dir="ltr"><td id="AKBV" class=""><strong>Port</strong></td><td id="]naT" class="">A number from 0 to 65535 that picks the program on a machine</td></tr><tr id="326633b0-2b14-83fd-8015-81b64637e45d" dir="ltr"><td id="AKBV" class=""><strong>Socket address</strong></td><td id="]naT" class="">IP + port together, e.g. <mark class="highlight-blue" data-notion-highlight="blue"><code>203.0.113.10:443</code></mark></td></tr><tr id="475633b0-2b14-8248-8ac6-816721407783" dir="ltr"><td id="AKBV" class=""><strong>Ephemeral port</strong></td><td id="]naT" class="">A temporary port the OS gives the client side of a connection</td></tr><tr id="780633b0-2b14-835c-a6e5-01b683404181" dir="ltr"><td id="AKBV" class=""><strong>Network interface</strong></td><td id="]naT" class="">One connection point to a network: Wi-Fi, Ethernet, loopback, VPN…</td></tr><tr id="127633b0-2b14-82dc-bbaa-013c5206a7b7" dir="ltr"><td id="AKBV" class=""><strong>MAC address</strong></td><td id="]naT" class="">The 48-bit hardware ID of one network interface</td></tr><tr id="ac6633b0-2b14-832a-97af-818e10f3dc0a" dir="ltr"><td id="AKBV" class=""><strong>Firewall</strong></td><td id="]naT" class="">Allows or blocks traffic using rules (port, IP, program)</td></tr></tbody></table><hr id="677633b0-2b14-83ef-aea5-015456e36243" dir="auto"/><div id="40b633b0-2b14-82b2-86fe-0121e18c0bb4" class="column-list" data-notion-column-list="" dir="auto"><div id="d32633b0-2b14-83ad-92c5-8134ccde0fb4" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="b41633b0-2b14-83b5-9e4f-8163a957fbc8" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-port-numbers.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-port-numbers.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-port-numbers.svg"/></a></figure></div><div id="fc8633b0-2b14-8225-8572-01e3e80226b0" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h2 id="efe633b0-2b14-83dd-8c1f-01ef4f9329c8" class="" dir="auto">Port Numbers</h2><p id="a86633b0-2b14-830b-91c0-01f1a9823f86" class="" dir="auto">The IP picks the machine; the port picks the program on it.</p></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fc5633b0-2b14-8292-9034-81f2124d18f9" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">203.0.113.10 : 443
+└ which machine ┘ └ which program (here: the HTTPS server)</code></pre><p id="edb633b0-2b14-83ba-bb6b-014d505f1413" class="" dir="auto">Ports are a transport-layer idea: TCP and UDP headers carry the port numbers, while the IP header only carries addresses.</p><table id="e23633b0-2b14-8353-93f2-810ffb024412" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="a30633b0-2b14-8225-8d42-01df8103ce0e" dir="ltr"><th id="F;SO" class="simple-table-header-color simple-table-header">Range</th><th id="K[dD" class="simple-table-header-color simple-table-header">Name</th><th id="yGbc" class="simple-table-header-color simple-table-header">Used for</th></tr></thead><tbody><tr id="78d633b0-2b14-82ec-ba18-01fca8e7b28f" dir="ltr"><td id="F;SO" class="">0 – 1023</td><td id="K[dD" class=""><strong>Well-known (system) ports</strong></td><td id="yGbc" class="">Standard services. On Linux, binding them needs root rights</td></tr><tr id="747633b0-2b14-832a-8011-018ce65aacb8" dir="ltr"><td id="F;SO" class="">1024 – 49151</td><td id="K[dD" class=""><strong>Registered (user) ports</strong></td><td id="yGbc" class="">Applications and databases (3000, 5432, 27017…)</td></tr><tr id="20d633b0-2b14-82bd-b00d-017479fc232d" dir="ltr"><td id="F;SO" class="">49152 – 65535</td><td id="K[dD" class=""><strong>Dynamic / ephemeral ports</strong></td><td id="yGbc" class="">Temporary client-side ports (Linux uses 32768–60999 by default)</td></tr></tbody></table><div id="f76633b0-2b14-8349-8c82-010594b2db44" class="column-list" data-notion-column-list="" dir="auto"><div id="1c7633b0-2b14-83d8-8286-013e86a32c84" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="10e633b0-2b14-8279-a8e1-0177e912a218" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-port-list.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-port-list.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-port-list.svg"/></a></figure></div><div id="2e3633b0-2b14-83b6-afff-81e07f13a98a" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h3 id="7b2633b0-2b14-83de-b254-0109895ee0fd" class="" dir="auto">Ports Worth Memorising</h3><p id="adb633b0-2b14-8264-8348-819cc4338d1e" class="" dir="auto">The ten ports interviewers expect you to know by heart.</p></div></div><table id="465633b0-2b14-82de-9fc3-818fa784fd01" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="788633b0-2b14-8335-abc7-811558a85579" dir="ltr"><th id="COtS" class="simple-table-header-color simple-table-header">Service</th><th id="N@Wi" class="simple-table-header-color simple-table-header">Port</th><th id="sWMr" class="simple-table-header-color simple-table-header">Service</th><th id="H`TS" class="simple-table-header-color simple-table-header">Port</th></tr></thead><tbody><tr id="1a1633b0-2b14-8390-9004-81b81f31b04e" dir="ltr"><td id="COtS" class="">HTTP</td><td id="N@Wi" class="">80</td><td id="sWMr" class="">MySQL</td><td id="H`TS" class="">3306</td></tr><tr id="085633b0-2b14-82c1-b53d-81dff959f884" dir="ltr"><td id="COtS" class="">HTTPS</td><td id="N@Wi" class="">443</td><td id="sWMr" class="">PostgreSQL</td><td id="H`TS" class="">5432</td></tr><tr id="133633b0-2b14-8241-9304-812459c9702a" dir="ltr"><td id="COtS" class="">SSH</td><td id="N@Wi" class="">22</td><td id="sWMr" class="">MongoDB</td><td id="H`TS" class="">27017</td></tr><tr id="7b8633b0-2b14-82fb-bb99-01ebc945169e" dir="ltr"><td id="COtS" class="">DNS</td><td id="N@Wi" class="">53</td><td id="sWMr" class="">Redis</td><td id="H`TS" class="">6379</td></tr><tr id="101633b0-2b14-8317-a528-015b187067c4" dir="ltr"><td id="COtS" class="">SMTP (email)</td><td id="N@Wi" class="">25</td><td id="sWMr" class="">FTP</td><td id="H`TS" class="">21</td></tr></tbody></table><p id="9b4633b0-2b14-8398-b24a-013656a6bef2" class="" dir="auto"><strong>Every connection has two ports.</strong> When your browser opens <mark class="highlight-blue" data-notion-highlight="blue"><code>https://example.com</code></mark>, the OS gives the browser a random ephemeral port, say 63813, and connects it to the server&#x27;s port 443. A connection is identified by four values: client IP, client port, server IP, server port. That is how one server port can serve thousands of clients at the same time.</p><figure id="0a6633b0-2b14-8213-b299-811aab3e0e9e" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/four-tuple.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/four-tuple.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/four-tuple.svg"/></a></figure><ul id="0d6633b0-2b14-8304-b771-01792c227597" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ Two different programs on ports 3000 and 4000 of the same machine <strong>is</strong> fine.</li></ul><ul id="2d6633b0-2b14-8217-9e37-01c52f47a762" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ Two programs listening on the same port and address is <strong>not</strong> possible.<ul id="709633b0-2b14-83db-a9e4-811ce892ae0f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">The second one fails with <code>EADDRINUSE</code>.</li></ul></li></ul><ul id="b79633b0-2b14-821e-a297-813fdd71dc5b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ Port 65536 does <strong>not</strong> exist.<ul id="15b633b0-2b14-8291-bb9c-01607ff45468" class="bulleted-list" dir="auto"><li style="list-style-type:circle">Ports are 16-bit numbers, so the biggest is 65535.</li></ul></li></ul><p id="e5a633b0-2b14-826e-b005-818256c9860a" class="" dir="auto">Checked on Node 24:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="eff633b0-2b14-8231-9b72-0177d936f462" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">const http = require(&quot;node:http&quot;);
+
+http.createServer().listen(3000);
+http.createServer()
+  .listen(3000)
+  .on(&quot;error&quot;, (err) =&gt; console.log(err.code, &quot;→&quot;, err.message));
+// EADDRINUSE → listen EADDRINUSE: address already in use :::3000</code></pre><p id="bba633b0-2b14-839e-b6e1-013f52d4ed50" class="" dir="auto">An out-of-range port fails straight away, before anything is opened:</p><pre id="06f633b0-2b14-836b-a813-8170892fa3af" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">require(&quot;node:http&quot;).createServer().listen(65536);
+// RangeError [ERR_SOCKET_BAD_PORT]: options.port should be &gt;= 0 and &lt; 65536. Received type number (65536).</code></pre><hr id="7cf633b0-2b14-830d-9753-01e022a6df27" dir="auto"/><div id="bcf633b0-2b14-83b0-85b2-81815bdfd027" class="column-list" data-notion-column-list="" dir="auto"><div id="aec633b0-2b14-8349-b8b9-01002e96ab1c" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="8ae633b0-2b14-836e-b4ec-81b100f77aa3" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-net-ifaces.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-net-ifaces.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-net-ifaces.svg"/></a></figure></div><div id="215633b0-2b14-82c8-915d-0100d4755fff" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h2 id="38f633b0-2b14-83b7-a037-814591084be5" class="" dir="auto">Network Interfaces</h2><p id="12a633b0-2b14-833e-a6eb-01492b69e183" class="" dir="auto">Each connection point has its own IP; listen() picks which ones accept.</p></div></div><blockquote id="93f633b0-2b14-8365-9a5d-81510cf00f1c" class="" dir="auto">A <strong>network interface</strong> is one connection point between a device and a network. A normal laptop has several, and each has its own IP address.</blockquote><table id="655633b0-2b14-8242-b589-81f9f7cba4b0" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="388633b0-2b14-8225-8b70-81fc5ddde234" dir="ltr"><th id="t&lt;s~" class="simple-table-header-color simple-table-header">Interface</th><th id="szn}" class="simple-table-header-color simple-table-header">What it is</th></tr></thead><tbody><tr id="56d633b0-2b14-8380-985c-815c11f9b28b" dir="ltr"><td id="t&lt;s~" class="">Wi-Fi adapter</td><td id="szn}" class="">Wireless link to your router</td></tr><tr id="850633b0-2b14-83e3-a5c1-012e2034cfe1" dir="ltr"><td id="t&lt;s~" class="">Ethernet adapter</td><td id="szn}" class="">Wired link</td></tr><tr id="11e633b0-2b14-83d1-9ee6-013b76f27125" dir="ltr"><td id="t&lt;s~" class=""><strong>Loopback</strong> (<mark class="highlight-blue" data-notion-highlight="blue"><code>127.0.0.1</code></mark>, <mark class="highlight-blue" data-notion-highlight="blue"><code>::1</code></mark>)</td><td id="szn}" class="">Virtual: the machine talking to itself. Traffic never leaves the computer</td></tr><tr id="b70633b0-2b14-8214-89d8-015931c8d01e" dir="ltr"><td id="t&lt;s~" class="">Virtual adapters</td><td id="szn}" class="">Made by VPNs, Docker, WSL and virtual machines</td></tr></tbody></table><pre id="acc633b0-2b14-83b6-95a5-01806b940efe" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">const os = require(&quot;node:os&quot;);
+
+for (const [name, addresses] of Object.entries(os.networkInterfaces())) {
+  for (const a of addresses) {
+    if (a.family === &quot;IPv4&quot;) console.log(name, a.address, a.internal ? &quot;(internal)&quot; : &quot;&quot;);
+  }
+}
+// Example output on Windows (your names and numbers will differ):
+// WiFi 192.168.1.10
+// Loopback Pseudo-Interface 1 127.0.0.1 (internal)
+// vEthernet (WSL (Hyper-V firewall)) 172.20.48.1</code></pre><p id="fe3633b0-2b14-823e-916a-810ab4969e2e" class="" dir="auto">The host you pass to <mark class="highlight-blue" data-notion-highlight="blue"><code>listen()</code></mark> picks which interfaces accept connections (each row checked on Node 24, Windows):</p><table id="8ef633b0-2b14-82ee-94ce-81bf5a7d9a70" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="a6f633b0-2b14-83e7-b35d-0111cdcd459d" dir="ltr"><th id="aZhG" class="simple-table-header-color simple-table-header"><mark class="highlight-blue" data-notion-highlight="blue"><code>server.listen(3000, host)</code></mark></th><th id="yViW" class="simple-table-header-color simple-table-header">Who can connect</th></tr></thead><tbody><tr id="a88633b0-2b14-8392-8f82-012be9d0c6aa" dir="ltr"><td id="aZhG" class=""><mark class="highlight-blue" data-notion-highlight="blue"><code>&quot;127.0.0.1&quot;</code></mark></td><td id="yViW" class="">Only programs on the same machine, over IPv4</td></tr><tr id="e51633b0-2b14-829d-97fa-0179efa86ae3" dir="ltr"><td id="aZhG" class=""><mark class="highlight-blue" data-notion-highlight="blue"><code>&quot;0.0.0.0&quot;</code></mark></td><td id="yViW" class="">Every IPv4 interface: same machine, your LAN, and the Internet if routed and allowed</td></tr><tr id="97a633b0-2b14-8205-8922-810887555478" dir="ltr"><td id="aZhG" class=""><em>(no host)</em></td><td id="yViW" class="">Node uses <mark class="highlight-blue" data-notion-highlight="blue"><code>::</code></mark> when IPv6 is available: every interface, IPv6 <strong>and</strong> IPv4</td></tr><tr id="ded633b0-2b14-82a8-913e-81efc21d5bb5" dir="ltr"><td id="aZhG" class=""><mark class="highlight-blue" data-notion-highlight="blue"><code>&quot;localhost&quot;</code></mark></td><td id="yViW" class="">Only the address <mark class="highlight-blue" data-notion-highlight="blue"><code>localhost</code></mark> resolves to first. On Windows that was <mark class="highlight-blue" data-notion-highlight="blue"><code>::1</code></mark>, so <mark class="highlight-blue" data-notion-highlight="blue"><code>127.0.0.1</code></mark> was refused</td></tr></tbody></table><figure id="c8e633b0-2b14-831c-b144-81596e00f85e" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/listen-host.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/listen-host.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/listen-host.svg"/></a></figure><ul id="92c633b0-2b14-8287-9d7b-01f15a84e8c0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ <strong>Testing your API from your phone on the same Wi-Fi</strong>: listen with no host (or <mark class="highlight-blue" data-notion-highlight="blue"><code>0.0.0.0</code></mark>) and open <mark class="highlight-blue" data-notion-highlight="blue"><code>http://&lt;laptop&#x27;s LAN IP&gt;:3000</code></mark>.</li></ul><ul id="be5633b0-2b14-82aa-8efb-8152eb5b7b86" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ <mark class="highlight-blue" data-notion-highlight="blue"><code>listen(3000, &quot;127.0.0.1&quot;)</code></mark> and then calling it from your phone does <strong>not</strong> work.<ul id="dfd633b0-2b14-82b5-8800-81be7188afff" class="bulleted-list" dir="auto"><li style="list-style-type:circle">The phone&#x27;s request arrives on the Wi-Fi interface, which is not listening: connection refused.</li></ul></li></ul><p id="346633b0-2b14-8385-8ba6-81ecd1e39a24" class="" dir="auto">➡️ <mark class="highlight-blue" data-notion-highlight="blue"><code><strong>localhost</strong></code></mark><strong> usually resolves to </strong><mark class="highlight-blue" data-notion-highlight="blue"><code><strong>::1</strong></code></mark><strong> first.</strong> If a server listens only on <mark class="highlight-blue" data-notion-highlight="blue"><code>127.0.0.1</code></mark> and a client connects to <mark class="highlight-blue" data-notion-highlight="blue"><code>localhost</code></mark>, Node 20+ (and 18.18+) quietly tries the IPv4 address next. Node 17–19 could fail here with <code>connect ECONNREFUSED ::1:27017</code>, a well-known MongoDB error. Writing <mark class="highlight-blue" data-notion-highlight="blue"><code>127.0.0.1</code></mark> in connection strings avoids the question.</p><hr id="944633b0-2b14-82ed-ad77-018973af850c" dir="auto"/><div id="d4f633b0-2b14-8261-940d-81f12f3fcb44" class="column-list" data-notion-column-list="" dir="auto"><div id="251633b0-2b14-82de-a383-014b551dfb42" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="7e9633b0-2b14-820d-bcb8-010f70fa334a" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-mac-addr.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-mac-addr.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-mac-addr.svg"/></a></figure></div><div id="826633b0-2b14-82aa-bb83-8175b230e4dd" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h2 id="c42633b0-2b14-8362-86b8-01da9ed10b8c" class="" dir="auto">MAC Addresses</h2><p id="19a633b0-2b14-82aa-8c51-010525d7ce8f" class="" dir="auto">The hardware ID of one network card, used only inside the LAN.</p></div></div><blockquote id="dc5633b0-2b14-8254-9853-81bc9a57c876" class="" dir="auto">A <strong>MAC address</strong> (Media Access Control) is the hardware ID of one network interface, set by the manufacturer. Switches use it to deliver data <strong>inside</strong> a local network.</blockquote><ul id="ece633b0-2b14-82ae-887d-81bae4c20be2" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ <strong>48 bits</strong> (6 bytes), written in hexadecimal: <mark class="highlight-blue" data-notion-highlight="blue"><code>00:1a:2b:3c:4d:5e</code></mark>.<ul id="309633b0-2b14-829b-99d3-013f319ef803" class="bulleted-list" dir="auto"><li style="list-style-type:circle">Windows shows <mark class="highlight-blue" data-notion-highlight="blue"><code>00-1A-2B-3C-4D-5E</code></mark> as &quot;Physical Address&quot; in <mark class="highlight-blue" data-notion-highlight="blue"><code>ipconfig /all</code></mark>.</li></ul></li></ul><ul id="1dd633b0-2b14-832a-acff-01ec6ea680f1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ The first 3 bytes identify the manufacturer.</li></ul><ul id="e2e633b0-2b14-83b6-950a-81b852d0ae0f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ The Wi-Fi card and the Ethernet port of one laptop have <strong>different</strong> MAC addresses.</li></ul><table id="e01633b0-2b14-8361-9baf-014bc1795a4d" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="7f2633b0-2b14-8224-98f8-014ba1404449" dir="ltr"><th id="xJvk" class="simple-table-header-color simple-table-header"></th><th id="uO&lt;U" class="simple-table-header-color simple-table-header">IP address</th><th id="@|ts" class="simple-table-header-color simple-table-header">MAC address</th></tr></thead><tbody><tr id="c8a633b0-2b14-8307-b371-0109b645f904" dir="ltr"><td id="xJvk" class="">Identifies</td><td id="uO&lt;U" class="">Where a device is on a network</td><td id="@|ts" class="">One specific network card</td></tr><tr id="c54633b0-2b14-8306-85c8-0147a657e105" dir="ltr"><td id="xJvk" class="">Given by</td><td id="uO&lt;U" class="">Router, ISP or DHCP (software)</td><td id="@|ts" class="">The manufacturer (hardware)</td></tr><tr id="663633b0-2b14-83cc-936c-0187d44782f1" dir="ltr"><td id="xJvk" class="">Changes when you join another network</td><td id="uO&lt;U" class="">Yes</td><td id="@|ts" class="">No</td></tr><tr id="a56633b0-2b14-82b0-8bba-01754d2e242d" dir="ltr"><td id="xJvk" class="">Travels</td><td id="uO&lt;U" class="">End to end across the Internet, in every IP packet</td><td id="@|ts" class="">Only within the local network</td></tr><tr id="041633b0-2b14-8391-b743-81477816f8fd" dir="ltr"><td id="xJvk" class="">Size</td><td id="uO&lt;U" class="">32 bits (IPv4) / 128 bits (IPv6)</td><td id="@|ts" class="">48 bits</td></tr><tr id="9cf633b0-2b14-8288-a48e-012c605b2124" dir="ltr"><td id="xJvk" class="">OSI layer</td><td id="uO&lt;U" class="">3 (network)</td><td id="@|ts" class="">2 (data link)</td></tr></tbody></table><ul id="ba9633b0-2b14-83e8-aa29-0156e6b25efe" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ The switch in your office <strong>is</strong> using MAC addresses to send a frame to the right computer.</li></ul><ul id="0c2633b0-2b14-835a-8da3-810f6b0166c0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ &quot;A website can see my MAC address&quot; is <strong>not</strong> true.<ul id="687633b0-2b14-821f-b802-011ece517173" class="bulleted-list" dir="auto"><li style="list-style-type:circle">MAC addresses are not part of IP packets; they never leave your local network.</li></ul></li></ul><ul id="dd3633b0-2b14-83f2-94b9-81bcbc057558" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ &quot;A MAC address can never change&quot; is <strong>not</strong> quite true.<ul id="fa4633b0-2b14-83e3-968f-81df63a09d01" class="bulleted-list" dir="auto"><li style="list-style-type:circle">The hardware one doesn&#x27;t, but phones (Android 10+, iOS 14+) show each Wi-Fi network a random MAC by default, for privacy.</li></ul></li></ul><hr id="83d633b0-2b14-838e-b053-8140b40fbfae" dir="auto"/><div id="b86633b0-2b14-8293-8384-01ed5c4928f7" class="column-list" data-notion-column-list="" dir="auto"><div id="30f633b0-2b14-8374-8dcd-81e9aebf594a" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="378633b0-2b14-83c7-b84a-019164d84342" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-firewall-wall.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-firewall-wall.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-firewall-wall.svg"/></a></figure></div><div id="a13633b0-2b14-82df-ae23-0134b13dc5e5" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h2 id="f3d633b0-2b14-8242-9fc4-019bec4e390f" class="" dir="auto">Firewalls</h2><p id="453633b0-2b14-82d3-b6a0-819a72dfc0b4" class="" dir="auto">Rules on port, IP and program decide which traffic gets through.</p></div></div><blockquote id="572633b0-2b14-82bf-a13d-81e490b995d1" class="" dir="auto">A <strong>firewall</strong> watches traffic coming in (<strong>inbound</strong>) and going out (<strong>outbound</strong>) and allows or blocks it using rules. It usually sits between a trusted network and an untrusted one, such as the Internet.</blockquote><table id="27c633b0-2b14-82ec-b492-815b03ca41f9" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="531633b0-2b14-837f-9012-014808f174bd" dir="ltr"><th id="tFas" class="simple-table-header-color simple-table-header">Direction</th><th id="EmXW" class="simple-table-header-color simple-table-header">Usual default</th><th id="etj?" class="simple-table-header-color simple-table-header">Example rule</th></tr></thead><tbody><tr id="543633b0-2b14-8230-997d-815d05ff937f" dir="ltr"><td id="tFas" class=""><strong>Inbound</strong></td><td id="EmXW" class="">Blocked, except replies to connections you started</td><td id="etj?" class="">&quot;Allow TCP 443 from anywhere&quot;</td></tr><tr id="326633b0-2b14-82a4-a106-810c951f0320" dir="ltr"><td id="tFas" class=""><strong>Outbound</strong></td><td id="EmXW" class="">Allowed</td><td id="etj?" class="">&quot;Block this program from the Internet&quot;</td></tr></tbody></table><p id="6de633b0-2b14-831a-abc4-812576f79a6d" class="" dir="auto">Rules match on <strong>port</strong>, <strong>IP address</strong> (or range) and <strong>program</strong>. A well-set firewall blocks almost every port by default and opens only the few a service needs.</p><p id="ef3633b0-2b14-83ad-81e3-017bcd488fd3" class="" dir="auto">➡️ <strong>In the cloud the same idea is called a security group (AWS)</strong>: a list of inbound and outbound rules attached to a server, e.g. &quot;allow 22 from my IP, allow 443 from anywhere&quot;.</p><ul id="be9633b0-2b14-839f-8616-012704fac668" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ <strong>Web server</strong>: open 80 and 443 to everyone, 22 only to your own IP.</li></ul><ul id="8b1633b0-2b14-8369-9a83-015633a5d4df" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ MongoDB (27017) or Redis (6379) open to the whole Internet is <strong>not</strong> safe.<ul id="96c633b0-2b14-83ee-932a-817c50700416" class="bulleted-list" dir="auto"><li style="list-style-type:circle">Bots scan for these all day. Allow them only from your app server.</li></ul></li></ul><hr id="dc2633b0-2b14-82cc-98ee-8161c31de653" dir="auto"/><h2 id="879633b0-2b14-8246-88b2-01cd332bc05f" class="" dir="auto">🏢 Analogy</h2><blockquote id="504633b0-2b14-8342-9aa8-01d9fbe13f87" class="" dir="auto">The IP address is a building&#x27;s street address. The port is the flat number inside. The firewall is the guard at the gate with a list of who may visit which flat. The MAC address is like the name on one resident&#x27;s ID card: the guard inside the building uses it, but it is never written on an envelope that travels across the city.</blockquote><figure id="037633b0-2b14-824f-944e-01258978320a" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/guard-gate.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/guard-gate.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/guard-gate.svg"/></a></figure><hr id="03e633b0-2b14-82c5-bfda-01d48032f50e" dir="auto"/><div id="c58633b0-2b14-8373-9682-011e14505ba9" class="column-list" data-notion-column-list="" dir="auto"><div id="6e2633b0-2b14-833a-9471-8166e8fe8d50" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="327633b0-2b14-822f-8c43-81a71ae1b6af" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-common-mistakes.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-common-mistakes.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-common-mistakes.svg"/></a></figure></div><div id="9f3633b0-2b14-82ff-bf16-016ea549841f" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h2 id="7b8633b0-2b14-8201-8733-8175c311d654" class="" dir="auto">Common Mistakes</h2><p id="29f633b0-2b14-839f-9624-01db62686407" class="" dir="auto">Three slips with listen addresses, open databases and MACs.</p></div></div><ul id="02a633b0-2b14-8301-98b6-014d0eb4f1f8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ <strong>&quot;It works on </strong><mark class="highlight-blue" data-notion-highlight="blue"><code><strong>localhost</strong></code></mark><strong> but not from another device.&quot;</strong><ul id="287633b0-2b14-83b5-aae6-811c8df13ec8" class="bulleted-list" dir="auto"><li style="list-style-type:circle">Check, in order: the address the server listens on, then the firewall rule for that port.</li></ul></li></ul><ul id="17a633b0-2b14-8231-be16-8153f3f93c9e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ <strong>Exposing database ports to the Internet.</strong><ul id="baa633b0-2b14-835f-91c8-811b89b0b684" class="bulleted-list" dir="auto"><li style="list-style-type:circle">Restrict them to the IPs that really need them.</li></ul></li></ul><ul id="238633b0-2b14-822f-8090-0186acdc0be5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">➤ <strong>Thinking the MAC address travels across the Internet.</strong><ul id="148633b0-2b14-83a0-8019-01ec9351042b" class="bulleted-list" dir="auto"><li style="list-style-type:circle">It is only used inside each local network.</li></ul></li></ul><hr id="5ab633b0-2b14-83ff-bbc6-010d1bbb056e" dir="auto"/><div id="81c633b0-2b14-826b-8cd8-01e8780f2870" class="column-list" data-notion-column-list="" dir="auto"><div id="023633b0-2b14-824e-a693-01fbd93c6250" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="129633b0-2b14-82fb-9dc4-81bdb2fd891b" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-interview-qa.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-interview-qa.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-interview-qa.svg"/></a></figure></div><div id="dfc633b0-2b14-8209-b91e-011e7cbfe87c" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h2 id="340633b0-2b14-834a-9589-81d379a6164b" class="" dir="auto">Interview Q&amp;A</h2><p id="7b1633b0-2b14-8279-a80f-812bc0533978" class="" dir="auto">The questions most often asked on this topic, with short answers to say out loud.</p></div></div><h3 id="752633b0-2b14-8372-9ec2-01031960fcb5" class="" dir="auto">Q1. What is a port number and why is it needed?</h3><p id="6c9633b0-2b14-832d-b09e-8169eca7c7a9" class="" dir="auto">➡️ A 16-bit number (0–65535) that identifies a program or service on a machine. The IP address finds the machine; the port lets one machine run many services, such as HTTPS on 443 and SSH on 22.</p><hr id="268633b0-2b14-82ff-bc66-814795d46af3" dir="auto"/><h3 id="a52633b0-2b14-8353-8e18-018d1465b28d" class="" dir="auto">Q2. What is the difference between an IP address and a MAC address?</h3><p id="ac9633b0-2b14-823b-a299-011df13f9540" class="" dir="auto">➡️ An IP address is a logical address that can change and is used to route data across networks. A MAC address is the hardware ID of a network card and is used only to deliver data inside the local network.</p><hr id="9fc633b0-2b14-8305-a30a-818ffa915c03" dir="auto"/><h3 id="c6d633b0-2b14-826a-8e9a-01b0d0770952" class="" dir="auto">Q3. What is the difference between listening on <mark class="highlight-blue" data-notion-highlight="blue"><code>127.0.0.1</code></mark> and <mark class="highlight-blue" data-notion-highlight="blue"><code>0.0.0.0</code></mark>?</h3><p id="98e633b0-2b14-8334-a55d-01509774989c" class="" dir="auto">➡️ <mark class="highlight-blue" data-notion-highlight="blue"><code>127.0.0.1</code></mark> accepts connections only from the same machine. <mark class="highlight-blue" data-notion-highlight="blue"><code>0.0.0.0</code></mark> accepts them on every IPv4 interface, so other devices can connect too. With no host, Node listens on <mark class="highlight-blue" data-notion-highlight="blue"><code>::</code></mark>, which covers IPv6 and IPv4.</p><hr id="f97633b0-2b14-838a-908b-012bf669b204" dir="auto"/><h3 id="da4633b0-2b14-8354-91f8-81ff1a4dea68" class="" dir="auto">Q4. What does a firewall do?</h3><p id="67b633b0-2b14-836e-bb82-817ea3dc41ed" class="" dir="auto">➡️ It filters inbound and outbound traffic using rules based on ports, IP addresses and programs. Inbound traffic is blocked by default except for replies and the ports you open on purpose.</p><hr id="166633b0-2b14-83fa-8872-01fd4425d774" dir="auto"/><h3 id="6eb633b0-2b14-8354-ab62-01dcfe4dc8c7" class="" dir="auto">Q5. How can one server port handle thousands of clients at once?</h3><p id="a1e633b0-2b14-83b7-96f2-811566e43de8" class="" dir="auto">➡️ Each connection is identified by four values: client IP, client port, server IP and server port. Every client gets its own ephemeral port from its OS, so all their connections to port 443 are still different.</p><hr id="a17633b0-2b14-839b-94f8-81fb006ab497" dir="auto"/><div id="a8a633b0-2b14-8375-ba18-8131ee7a102f" class="column-list" data-notion-column-list="" dir="auto"><div id="a94633b0-2b14-83b1-8901-81d239b03f8c" style="width:12.5%" class="column" data-notion-column-ratio="0.125" dir="auto"><figure id="b83633b0-2b14-82b9-884a-81137655b977" class="image" data-notion-image="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-practice.svg" dir="ltr"><a href="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-practice.svg"><img src="4%20Ports,%20Network%20Interfaces,%20MAC%20Addresses%20&amp;%20Firew/094-practice.svg"/></a></figure></div><div id="f20633b0-2b14-82ae-a739-812563dbd553" style="width:87.5%" class="column" data-notion-column-ratio="0.875" dir="auto"><h2 id="49a633b0-2b14-82c3-ad8b-01c9c2c82b99" class="" dir="auto">Practice</h2><p id="cb5633b0-2b14-83cd-b025-01804cb99421" class="" dir="auto">Try each one yourself before opening the answer.</p></div></div><h3 id="97e633b0-2b14-833a-a1ba-8123c3b58d42" class="" dir="auto">P1. Name the port</h3><p id="f0f633b0-2b14-838e-86b8-01274bfc10fc" class="" dir="auto">HTTPS, MongoDB, SSH, Redis, PostgreSQL, DNS. Then say which range 8080, 443 and 55000 belong to.</p><details id="e1c633b0-2b14-82fa-bed8-81809a2168f7" open="" class="toggle" dir="auto"><summary>Answer</summary><div class="indented"><p id="0a1633b0-2b14-8259-ade6-819e323e626a" class="" dir="auto">443, 27017, 22, 6379, 5432, 53. Ranges: 8080 is registered, 443 is well-known, 55000 is dynamic / ephemeral.</p></div></details><h3 id="b31633b0-2b14-8396-9b8a-012604a0dfb2" class="" dir="auto">P2. Debug EADDRINUSE</h3><p id="e7e633b0-2b14-83b7-a145-8108636bc6e4" class="" dir="auto"><mark class="highlight-blue" data-notion-highlight="blue"><code>node server.js</code></mark> prints <code>Error: listen EADDRINUSE: address already in use :::3000</code>. What does it mean, and what are two fixes?</p><details id="95f633b0-2b14-83e5-8eea-81e52ca73175" open="" class="toggle" dir="auto"><summary>Answer</summary><div class="indented"><p id="5f1633b0-2b14-82fd-90ac-012716e93c4f" class="" dir="auto">Another process is already listening on port 3000. (1) Find and stop it: <mark class="highlight-blue" data-notion-highlight="blue"><code>netstat -ano | findstr :3000</code></mark> on Windows or <mark class="highlight-blue" data-notion-highlight="blue"><code>lsof -i :3000</code></mark> on Linux/macOS shows its process ID. (2) Or start your server on another port.</p></div></details><h3 id="d4d633b0-2b14-8327-a971-817d2fe8f1b6" class="" dir="auto">P3. Debug a timeout</h3><p id="4b2633b0-2b14-82c5-9da6-810d31b53f57" class="" dir="auto">Your API on a cloud server works with <mark class="highlight-blue" data-notion-highlight="blue"><code>curl localhost:4000</code></mark> from inside the server but times out from your laptop. What do you check, in order?</p><details id="4c0633b0-2b14-8231-8c55-81a482e9b39b" open="" class="toggle" dir="auto"><summary>Answer</summary><div class="indented"><p id="bf0633b0-2b14-8369-8236-813697120e9c" class="" dir="auto">(1) Is the server listening on all interfaces, not only <mark class="highlight-blue" data-notion-highlight="blue"><code>127.0.0.1</code></mark>? (2) Does the cloud firewall / security group allow inbound TCP 4000? (3) Does the server&#x27;s own OS firewall allow it? (4) Are you using the server&#x27;s public IP, not its private one?</p></div></details><hr id="66c633b0-2b14-82b4-986d-819516d8387e" dir="auto"/><h2 id="93d633b0-2b14-8395-9b16-015aa295798a" class="" dir="auto">⭐ Final Recap</h2><p id="73b633b0-2b14-83fb-9311-8192bbec0ebf" class="" dir="auto">💡 <strong>The IP finds the machine and the port (0–65535) finds the program; </strong><mark class="highlight-blue" data-notion-highlight="blue"><code><strong>listen()</strong></code></mark><strong>&#x27;s host picks which interfaces accept connections; the MAC address only matters inside the local network; and the firewall decides which inbound and outbound traffic gets through.</strong></p><p id="476633b0-2b14-8316-ade5-01be680c573d" class="" dir="auto"><strong>Sources:</strong> <a href="https://www.cloudflare.com/learning/network-layer/what-is-a-computer-port/">Cloudflare: What is a computer port?</a> · <a href="https://www.cloudflare.com/learning/network-layer/what-is-a-network-switch/">Cloudflare: What is a network switch? (MAC vs IP)</a> · <a href="https://www.cloudflare.com/learning/security/what-is-a-firewall/">Cloudflare: What is a firewall?</a> · <a href="https://www.rfc-editor.org/rfc/rfc6335#section-6">RFC 6335: port number ranges</a> · <a href="https://nodejs.org/api/net.html#serverlisten">Node.js net docs (server.listen)</a> · <a href="https://nodejs.org/api/os.html#osnetworkinterfaces">Node.js os.networkInterfaces()</a></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
