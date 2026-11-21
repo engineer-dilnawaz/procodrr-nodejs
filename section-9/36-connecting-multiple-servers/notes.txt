@@ -1,0 +1,50 @@
+🗝️ SSH Config File aur Multiple Server Connections
+🔹 SSH Config File Kya hai?
+/.ssh/config ek configuration file hai jo SSH ke liye shortcuts banati hai.
+Iske through tum multiple servers ke liye IP, User aur Key define kar sakte ho.
+Matlab ab tumhe bar-bar lamba command likhne ki zarurat nahi hai.
+
+🔹 Config File Structure
+Ek typical SSH config file ka example:
+
+Host local-server    
+   HostName 192.168.0.104    
+   User anurag    
+   IdentityFile /.ssh/local-key
+
+Host aws-server
+   HostName 65.2.122.85    
+   User ubuntu    
+   IdentityFile /.ssh/aws-key
+
+🔹 Breakdown
+Host
+Ye ek nickname/shortcut hota hai.
+Jaise local-server ya aws-server.
+HostName
+Server ka IP Address ya domain name.
+User
+Kaunsa user use hoga login ke liye (ex: ubuntu, root, anurag).
+IdentityFile
+Wo private key jo authentication ke liye use hogi.
+
+🔹 Without Config File
+Normal SSH command chalti hai:
+ssh -i /.ssh/aws-key ubuntu@65.2.122.85
+
+🔹 With Config File
+Config file ke baad bas simple likhna hoga:
+ssh aws-server
+Ya
+ssh local-server
+Aur SSH automatically IP, User aur Key pick kar lega ✅
+
+🔹 Benefits
+Time bachaata hai ⏳
+Multiple servers manage karna easy ho jaata hai 🖥️
+IPs aur keys yaad nahi rakhni padti 🧠
+
+👉 Is tarah tum easily multiple servers ke liye SSH connections bana sakte ho without confusion.
+
+
+----

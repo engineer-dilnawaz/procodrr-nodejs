@@ -1,0 +1,55 @@
+📂 File Transfer using SCP (Secure Copy Protocol)
+🛠 SCP kya hai?
+SCP ek command-line tool hai jo SSH protocol use karke files transfer karta hai.
+Iska fayda → Data transfer encrypted hota hai (jaise SSH me hota hai).
+Purane time me log FTP (File Transfer Protocol) use karte the, lekin wo unencrypted hota tha → hackers beech me data pakad sakte the.
+Isliye ab SCP / SFTP (secure FTP) use hota hai.
+
+⚙️ SCP Command Syntax
+scp [options] [source] [destination]
+
+📤 Local → Remote (file bhejna)
+Tumhare system se dusre system par file bhejne ke liye:
+scp myfile.txt aviral@192.168.1.9:/home/aviral/Documents/
+🔎 Breakdown:
+myfile.txt → jo file copy karni hai (local system se)
+aviral@192.168.1.9 → dusre system ka username + IP
+:/home/aviral/Documents/ → remote system me kaha store karna hai
+
+📥 Remote → Local (file lana)
+Server ya dusre computer se apne system par file copy karna:
+
+scp aviral@192.168.1.9:/home/aviral/report.pdf ./Downloads/
+🔎 Breakdown:
+aviral@192.168.1.9:/home/aviral/report.pdf → remote machine ki file
+./Downloads/ → local system ki destination folder
+
+📦 Folder Transfer (recursive)
+Agar pura folder bhejna hai to -r (recursive) lagana padta hai:
+
+scp -r ./myProject aviral@192.168.1.9:/home/aviral/
+
+🔗 Relation with SSH
+Jab bhi scp chalate ho → andar hi andar SSH connection ban raha hota hai.
+Matlab:
+Authentication SSH keys / password se hota hai
+Data transmission bhi SSH ke encryption layer se pass hota hai
+Isliye tum notice karoge ki SCP ke liye koi alag server install karne ki zarurat nahi → sirf ssh server ho to SCP automatically kaam karega. 🚀
+
+🆚 SCP vs SFTP
+SCP → Simple & fast (direct copy-paste type)
+SFTP → Interactive (jaise FTP ka secure version → login kar ke browse kar sakte ho)
+
+👉 Matlab simple line:
+SCP ek "secure courier" hai jo tumhari file ko ek system se dusre system tak safely pahuncha deta hai, aur wo bhi SSH ke protection ke andar.
+
+
+
+
+------
+Transfering files using SCP command
+
+    SCP stands for Secure Copy Protocol, and it is a method used to securely transfer files between computers over a network. It uses SSH (Secure Shell) to ensure encrypted data transfer, which makes it more secure compared to other protocols like FTP.
+
+    SCP Command Syntax:
+    scp [options] [source] [destination]
