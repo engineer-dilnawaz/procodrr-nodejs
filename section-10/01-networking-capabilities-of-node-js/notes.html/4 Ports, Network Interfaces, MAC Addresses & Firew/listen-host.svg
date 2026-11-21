@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="800" height="360" role="img" aria-labelledby="t d">
+<title id="t">Which host you pass to listen decides who can connect</title>
+<desc id="d">A server that listens on 127.0.0.1 accepts programs on the same machine, but a phone on the same Wi-Fi is refused, because its request arrives on the Wi-Fi interface. A server on 0.0.0.0 accepts both. With no host, Node listens on the IPv6 address ::, which covers IPv6 and IPv4 on every interface.</desc>
+<style>
+  text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .mono { font-family: Consolas, "Cascadia Mono", Menlo, monospace; }
+  .zone { font-size: 12px; font-weight: 800; letter-spacing: .6px; }
+  .name { font-size: 14px; font-weight: 800; }
+  .sub { font-size: 11.5px; fill: #94a3b8; }
+  .cap { font-size: 15px; fill: #f1f5f9; text-anchor: middle; opacity: 0; }
+  .c1 { animation: c1 10s steps(1, end) infinite; }
+  .c2 { animation: c2 10s steps(1, end) infinite; }
+  .c3 { animation: c3 10s steps(1, end) infinite; }
+  .c4 { animation: c4 10s steps(1, end) infinite; }
+  @keyframes c1 { 0% { opacity: 1; } 25% { opacity: 0; } }
+  @keyframes c2 { 0% { opacity: 0; } 25% { opacity: 1; } 50% { opacity: 0; } }
+  @keyframes c3 { 0% { opacity: 0; } 50% { opacity: 1; } 75% { opacity: 0; } }
+  @keyframes c4 { 0% { opacity: 0; } 75% { opacity: 1; } 98% { opacity: 0; } }
+  .l1 { animation: l1 10s steps(1, end) infinite; }
+  .l2 { animation: l2 10s steps(1, end) infinite; }
+  .l3 { animation: l3 10s steps(1, end) infinite; }
+  @keyframes l1 { 0% { stroke: #fbbf24; stroke-width: 3; } 25% { stroke: #334155; stroke-width: 1.5; } 75% { stroke: #4ade80; stroke-width: 3; } 98% { stroke: #fbbf24; stroke-width: 3; } }
+  @keyframes l2 { 0% { stroke: #334155; stroke-width: 1.5; } 25% { stroke: #60a5fa; stroke-width: 3; } 50% { stroke: #334155; stroke-width: 1.5; } 75% { stroke: #4ade80; stroke-width: 3; } 98% { stroke: #334155; stroke-width: 1.5; } }
+  @keyframes l3 { 0% { stroke: #334155; stroke-width: 1.5; } 50% { stroke: #a78bfa; stroke-width: 3; } 75% { stroke: #4ade80; stroke-width: 3; } 98% { stroke: #334155; stroke-width: 1.5; } }
+  .a3 { opacity: 0; animation: a3 10s steps(1, end) infinite; }
+  @keyframes a3 { 0% { opacity: 0; } 3% { opacity: 1; } 98% { opacity: 0; } }
+  .a10 { opacity: 0; animation: a10 10s steps(1, end) infinite; }
+  @keyframes a10 { 0% { opacity: 0; } 10% { opacity: 1; } 98% { opacity: 0; } }
+  .a17 { opacity: 0; animation: a17 10s steps(1, end) infinite; }
+  @keyframes a17 { 0% { opacity: 0; } 17% { opacity: 1; } 98% { opacity: 0; } }
+  .a27 { opacity: 0; animation: a27 10s steps(1, end) infinite; }
+  @keyframes a27 { 0% { opacity: 0; } 27% { opacity: 1; } 98% { opacity: 0; } }
+  .a34 { opacity: 0; animation: a34 10s steps(1, end) infinite; }
+  @keyframes a34 { 0% { opacity: 0; } 34% { opacity: 1; } 98% { opacity: 0; } }
+  .a41 { opacity: 0; animation: a41 10s steps(1, end) infinite; }
+  @keyframes a41 { 0% { opacity: 0; } 41% { opacity: 1; } 98% { opacity: 0; } }
+  .a52 { opacity: 0; animation: a52 10s steps(1, end) infinite; }
+  @keyframes a52 { 0% { opacity: 0; } 52% { opacity: 1; } 98% { opacity: 0; } }
+  .a60 { opacity: 0; animation: a60 10s steps(1, end) infinite; }
+  @keyframes a60 { 0% { opacity: 0; } 60% { opacity: 1; } 98% { opacity: 0; } }
+  .a77 { opacity: 0; animation: a77 10s steps(1, end) infinite; }
+  @keyframes a77 { 0% { opacity: 0; } 77% { opacity: 1; } 98% { opacity: 0; } }
+</style>
+<rect width="800" height="360" rx="18" fill="#0f172a"/>
+<text x="24" y="34" font-size="18" font-weight="700" fill="#e5e7eb">listen(): the host picks which interfaces accept</text>
+<rect class="l1" x="24" y="50" width="752" height="72" rx="12" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+<text class="name" x="40" y="80" fill="#fcd34d">listen 127.0.0.1</text><text class="sub" x="40" y="100">loopback only</text>
+<rect class="l2" x="24" y="130" width="752" height="72" rx="12" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+<text class="name" x="40" y="160" fill="#93c5fd">listen 0.0.0.0</text><text class="sub" x="40" y="180">every IPv4 interface</text>
+<rect class="l3" x="24" y="210" width="752" height="72" rx="12" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+<text class="name" x="40" y="240" fill="#c4b5fd">no host</text><text class="sub" x="40" y="260">Node uses ::</text>
+<g class="a3"><rect x="190" y="72" width="120" height="28" rx="6" fill="#052e16" stroke="#16a34a" stroke-width="1.5"/><text class="mono" x="250.0" y="90.32" font-size="12" font-weight="700" fill="#bbf7d0" text-anchor="middle">same machine</text></g>
+<g class="a10"><path d="M318 86 H348 m-8 -6 l8 6 -8 6" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linejoin="round"/><rect x="356" y="72" width="90" height="28" rx="6" fill="#1e3a5f" stroke="#60a5fa" stroke-width="1.5"/><text class="mono" x="401.0" y="90.32" font-size="12" font-weight="700" fill="#bfdbfe" text-anchor="middle">server</text></g>
+<g class="a17"><rect x="470" y="72" width="130" height="28" rx="6" fill="#3f1d1d" stroke="#f87171" stroke-width="1.5"/><text class="mono" x="535.0" y="90.32" font-size="12" font-weight="700" fill="#fecaca" text-anchor="middle">phone on Wi-Fi</text><text x="610" y="91" font-size="12" font-weight="800" fill="#fca5a5">refused</text></g>
+<g class="a27"><rect x="190" y="152" width="120" height="28" rx="6" fill="#052e16" stroke="#16a34a" stroke-width="1.5"/><text class="mono" x="250.0" y="170.32" font-size="12" font-weight="700" fill="#bbf7d0" text-anchor="middle">same machine</text></g>
+<g class="a34"><rect x="320" y="152" width="130" height="28" rx="6" fill="#052e16" stroke="#16a34a" stroke-width="1.5"/><text class="mono" x="385.0" y="170.32" font-size="12" font-weight="700" fill="#bbf7d0" text-anchor="middle">phone on Wi-Fi</text></g>
+<g class="a41"><path d="M458 166 H488 m-8 -6 l8 6 -8 6" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linejoin="round"/><rect x="496" y="152" width="90" height="28" rx="6" fill="#1e3a5f" stroke="#60a5fa" stroke-width="1.5"/><text class="mono" x="541.0" y="170.32" font-size="12" font-weight="700" fill="#bfdbfe" text-anchor="middle">server</text><text x="596" y="171" font-size="11.5" font-weight="800" fill="#bfdbfe">both get in</text></g>
+<g class="a52"><rect x="190" y="232" width="140" height="28" rx="6" fill="#2e1065" stroke="#a78bfa" stroke-width="1.5"/><text class="mono" x="260.0" y="250.32" font-size="12" font-weight="700" fill="#ddd6fe" text-anchor="middle">IPv6 + IPv4</text></g>
+<g class="a60"><text x="342" y="251" font-size="12" font-weight="800" fill="#ddd6fe">Node's default with no host</text></g>
+<g class="a77"><rect x="600" y="226" width="160" height="40" rx="8" fill="#052e16" stroke="#4ade80" stroke-width="2"/><text x="680.0" y="243.0" font-size="11.5" font-weight="800" fill="#bbf7d0" text-anchor="middle">choose the host</text><text x="680.0" y="258.5" font-size="11.5" font-weight="800" fill="#bbf7d0" text-anchor="middle">on purpose</text></g>
+<rect x="24" y="294" width="752" height="50" rx="10" fill="#0b1220" stroke="#334155"/>
+<text class="cap c1" x="400" y="325">1. listen(3000, "127.0.0.1"): only programs on the same machine</text>
+<text class="cap c2" x="400" y="325">2. A phone on the same Wi-Fi is refused: wrong interface</text>
+<text class="cap c3" x="400" y="325">3. listen(3000, "0.0.0.0"): every IPv4 interface accepts</text>
+<text class="cap c4" x="400" y="325">4. No host: Node listens on ::, covering IPv6 and IPv4</text>
+</svg>

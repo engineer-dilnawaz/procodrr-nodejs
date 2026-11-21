@@ -1,0 +1,46 @@
+📌 Socket in Networking
+👉 Definition:
+Socket ek endpoint hota hai jisme se hum data send/receive karte hain.
+UDP ke case mein yeh connectionless hota hai (means direct handshake ya connection nahi banta, bas data fire and forget mode mein jata hai 🚀).
+
+⚡ How UDP Sockets Work
+🖥️ Server Side
+Create a socket
+Bind socket ko ek IP + Port par
+Wait for incoming data (message receive karega)
+📱 Client Side
+Create a socket
+Send data server ke IP + Port par
+
+🔑 UDP Socket = IP + Port
+Ek full UDP communication define hota hai:
+Source IP : Port → kahan se aa raha hai
+Destination IP : Port → kahan jaa raha hai
+👉 Isi se pata chalta hai ki message kiske paas bhejna hai aur kahan se aaya hai.
+
+⚡ Summary:
+Socket basically ek communication endpoint hai.
+UDP socket lightweight hota hai, connectionless hota hai, aur fast communication ke liye use hota hai (jaise gaming, video streaming, VoIP, etc.). 🎮📞
+
+
+----
+Understanding Socket
+
+    A socket in networking is an endpoint for sending or receiving data. In the case of UDP (User Datagram Protocol), sockets are used for connectionless communication.
+
+    How UDP Sockets Work
+
+    -> Server Side:
+        Create a socket
+        Bind it to an IP + port
+        Wait for data
+
+    -> Client Side:
+        Create a socket
+        send data to the server’s IP + port
+
+    UDP Socket = IP + Port
+    A full UDP communication is defined by:
+        Source IP:Port
+        Destination IP:Port
+    This is how devices know where to send and where the message came from.

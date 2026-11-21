@@ -1,0 +1,109 @@
+Creating UDP Server
+
+    ### Clinet UDP
+    import dgram from "node:dgram";
+
+    // returns an eventEmitter
+    const socket = dgram.createSocket("udp4");
+
+    // Listens for message event from sender/server
+    socket.on("message", (message, remoteAddress) => {
+    console.log(message.toString(), remoteAddress);
+    });
+
+    // Send a message to port 4000, at given IP
+    socket.send("Hi from server", 4000, "192.168.0.104");
+
+    ### Server UDP
+    import dgram from "node:dgram";
+
+    // returns an eventEmitter
+    const socket = dgram.createSocket("udp4");
+
+    // Listens for message event from sender/server
+    socket.on("message", (message, remoteAddress) => {
+    console.log(message.toString(), remoteAddress);
+    socket.send("Message Received!!", remoteAddress.port, remoteAddress.address);
+    });
+
+    // Create an UDP server on Port 4000, and all local IPs
+    socket.bind({ port: 4000 }, () => {
+    console.log("Listening");
+    console.log(socket.address());
+    });
+
+
+    ----
+    📡 Creating UDP Server in Node.js
+🔹 Step 1: Import dgram Module
+UDP ke liye Node.js me dgram module use hota hai.
+import dgram from "node:dgram";
+const socket = dgram.createSocket("udp4");  
+// "udp4" for IPv4
+
+🔹 Step 2: Listening for Messages (UDP Server)
+Jab bhi koi device message bhejega, message event trigger hoga.
+socket.on("message", (msg, rinfo) => {  console.log("Message in buffer:", msg);  console.log("Message in string:", msg.toString());  console.log("Remote device info:", rinfo);
+});
+msg → actual message (Buffer format)
+rinfo → info about sender (IP address, port, size etc.)
+
+🔹 Step 3: Binding Server to a Port
+UDP server ko ek port par bind karna zaroori hai (agar tum server bana rahe ho).
+socket.bind({ port: 4000 }, () => {  console.log("Server listening on", socket.address());
+});
+⚠️ Browser me ye directly accessible nahi hai, kyunki browsers UDP ko samajhte nahi.
+
+🔹 Step 4: Sending Message (UDP Client)
+Agar tum server nahi banana chahte aur dusre device ko message bhejna hai → socket.send() use karte hain.
+socket.send("Hi from Lappy", 3000, "192.168.1.3");
+"Hi from Lappy" → message
+3000 → mobile app server port
+"192.168.1.3" → mobile ka IP (local network me)
+
+🔹 Working Example (Scenario)
+Tumhare Laptop me client code run ho raha hai.
+Tumhare Phone me UDP Server app chal rahi hai (port 3000 pe).
+Jab laptop se message bheja →
+Message Received from 192.168.1.9:34688 < "Hi from Lappy"
+→ yeh phone ki app par show hua.
+
+✅ Summary:
+Agar tumhe server banana hai → bind() use karo.
+Agar tumhe dusre device ko message bhejna hai → send() use karo.
+UDP connectionless protocol hai → sirf message bhejna hota hai, koi connection establish nahi hota.
+
+
+---
+import dgram from "node:dgram";
+
+const socket = dgram.createSocket("udp4");
+
+socket.on("message", (a, b) => {
+  console.log("a is the message in buffer =>>>>>>", a);
+  console.log("message in string :", a.toString());
+  console.log(
+    "b is the device info (from we are sending message), basically remote address =>>>>>>",
+    b
+  );
+});
+
+//Here I have downloaded a udp application in phone from there I am sending a message
+
+// socket.bind({ port: 4000 }, () => {
+//   console.log(socket.address());
+//   const address = socket.address().port;
+//   console.log(Listening on port ${address});
+// });
+
+//We cant see this on browser because browser does not understand UDP.
+
+//Now I want to send the message form lappy to phone, means basically I want the phone to act as a server now, so I need to comment out the bind method
+//Because bind method creates a server
+//In my mobile appliction, I have created a server and am listening in port 3000
+
+//192.168.1.3 is my phones ip
+socket.send("Hi from Lappy", 3000, "192.168.1.3");
+
+//In my mobile,I can see :
+//Message Received from 192.168.1.9:34688 < "Hi from Lappy"

@@ -1,0 +1,25 @@
+🌐 Networking Capabilities of Node.js
+🔹 Introduction
+Node.js ek event-driven, non-blocking I/O model par based hai jo ise high-performance networking apps banane ke liye best banata hai.
+🔹 Built-in Networking Modules
+Node.js ke paas kai modules hote hain jo alag-alag protocols handle karte hain:
+📦 net Module
+TCP (Transmission Control Protocol) based servers aur clients banane ke liye.
+Example: Chat applications, socket-based apps.
+📦 dgram Module
+UDP (User Datagram Protocol) ke liye use hota hai.
+Example: Video streaming, online games, VoIP.
+📦 http Module
+HTTP server banane ke liye.
+Example: Web apps, REST APIs.
+📦 https Module
+HTTP ka secure version (SSL/TLS encryption ke sath).
+Example: Secure e-commerce apps, login systems.
+📦 dns Module
+DNS lookup aur domain-related queries ke liye.
+Example: Domain name resolve karna → www.google.com ko IP address me convert karna.
+🔹 Why Node.js is Powerful in Networking?
+Non-blocking I/O → ek sath thousands of connections handle kar sakta hai.
+Lightweight aur fast → real-time apps ke liye best (chat, live updates).
+Inbuilt support for multiple protocols.
+👉 Summary: Node.js ek strong platform hai networking ke liye jisme TCP, UDP, HTTP, HTTPS, DNS jaise protocols ke liye modules already included hain.

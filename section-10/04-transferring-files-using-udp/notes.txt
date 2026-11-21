@@ -1,0 +1,29 @@
+📂 Transferring Files Using UDP
+👉 UDP ki khasiyat:
+⚡ Fast hai
+❌ Reliable nahi hai → delivery, order, ya error-check ka guarantee nahi hota
+
+🚫 Problems with File Transfer over UDP
+Packet Size Limit → 65KB se zyada ka packet nahi bhej sakte
+No Retransmission → agar packet loss ho gaya toh woh khatam, resend automatic nahi hota
+No Acknowledgment → receiver confirm nahi karta ki data mila ya nahi
+
+✅ Possible Approach (if forced to use UDP)
+File ko chunks (small pieces) mein todna hoga
+Har chunk ka sequence number rakhna hoga
+Agar koi packet miss ho jaye toh manually resend logic likhna padega
+⚠️ Matlab saara reliability ka kaam developer ko handle karna padega.
+
+💡 Better Solution
+TCP use karo → TCP automatically:
+Order maintain karta hai
+Error-check aur retransmission karta hai
+Reliable file transfer ke liye best hai
+
+🎯 Real Use Cases of UDP in File Transfer
+TFTP (Trivial File Transfer Protocol) → lightweight file transfer ke liye UDP use hota hai
+Real-time needs → jaise video streaming, VoIP, online gaming, jaha speed > reliability hoti hai
+
+👉 Final line:
+File transfer ke liye TCP > UDP
+UDP sirf tab jab ultra-fast aur lightweight transfer chahiye without reliability. ⚡
