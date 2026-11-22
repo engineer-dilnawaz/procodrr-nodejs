@@ -1,0 +1,110 @@
+TCP Client
+
+    A TCP client connects to a server using the net module. It's responsible for initiating the connection and handling any errors.
+
+    const net = require('net');
+
+    const client = net.createConnection({ port: 3000, host: 'localhost' }, () => {
+        console.log('Connected to server');
+        client.write('Hello Server!');
+    });
+
+    // Receiving data from server
+    client.on('data', (data) => {
+        console.log('Server says:', data.toString());
+    });
+
+    // Handling server disconnection
+    client.on('end', () => {
+        console.log('Disconnected from server');
+    });
+
+    // Error handling
+    client.on('error', (err) => {
+        console.error('Error:', err.message);
+    });
+
+    Key Concepts :
+        net.createConnection()	Initiates TCP connection to server
+        client.write()	        Sends data to server
+        client.on('data')	    Handles incoming server messages
+        client.on('error')	    Handles connection errors (important!)
+        client.on('end')	    Triggered when server disconnects
+
+    Tip -> Always add error handling in both client and server to avoid crashes when connections fail or close unexpectedly.
+
+
+    ----
+
+
+
+Creating TCP Client using Node.js
+
+🛠️ Client Code
+import net from "node:net";
+// Create a TCP client
+const socket = net.createConnection({ host: "192.168.1.9", port: 4000 });
+
+// If server is not available
+socket.on("error", () => {
+console.log("❌ Server Lost");
+});
+
+// Send message after 2 sec
+setTimeout(() => {
+socket.write("Hi from Client 👋");
+socket.end(); // close connection from client side
+}, 2000);
+
+// Receive data from server
+socket.on("data", (chunk) => {
+console.log("Server says:", chunk.toString());
+});
+
+🛠️ Server Code
+
+import net from "node:net";
+
+// Create TCP server
+const server = net.createServer((socket) => {
+console.log("✅ Client Connected:", socket.remoteAddress);
+
+// Data received from client
+socket.on("data", (chunk) => {
+console.log("Client says:", chunk.toString());
+});
+
+// Send reply
+socket.write("Got your message ✅");
+socket.end(); // server closes connection after reply
+
+// Handle disconnection
+socket.on("close", () => {
+console.log(socket.remoteAddress, ": Client disconnected ❌");
+});
+
+// Handle errors
+socket.on("error", () => {
+console.log("⚠️ Client Lost");
+});
+});
+
+// Start server
+server.listen(4000, "0.0.0.0", () => {
+console.log("🚀 Server started on port 4000");
+});
+
+🔎 Client–Server Flow
+Server → Start listening (server.listen)
+Client → Connect karega (net.createConnection)
+Communication
+Client → Server: socket.write("Hi...")
+Server → Client: socket.write("Got your message")
+Close → Client ya Server connection ko .end() karke band kar sakte hain
+Error Handling → Agar server down hai ya client disconnect ho jaye toh error aur close events trigger hote hain
+
+⚡ Key Points
+Client ke paas direct socket milta hai → net.createConnection()
+Server ke paas socket callback me milta hai → net.createServer((socket)=>{})
+TCP Socket = Duplex Stream → Read + Write dono side
+Client ka ek specific remoteAddress aur remotePort hota hai jisse server identify karta hai
