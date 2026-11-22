@@ -1,0 +1,46 @@
+🖥 Handling Multiple TCP Clients in Node.js
+🔹 Server (app.js)
+
+clientsList ek array hai jisme har naya connected client ka socket store hota hai.
+
+Jab koi client message bhejta hai → wo data event se receive hota hai → phir server sabhi clients ko broadcast kar deta hai.
+
+Agar aap server terminal me input likhoge → wo bhi clientsList ke through sab clients ko broadcast hoga.
+
+Events handle kiye gaye:
+
+data → message receive & broadcast
+
+close → client disconnected
+
+error → client lost
+
+👉 Isse basically ek chatroom server ban gaya.
+
+Example Flow:
+
+Client A aur Client B connect hue.
+
+Client A ne likha Hello → Server ne Client B ko bhi bhej diya.
+
+Client B ne likha Hi → Server ne Client A ko bhi bhej diya.
+
+Server console me total connected clients ki count dikhata hai.
+
+🔹 Client (client.js)
+
+Har client ek socket banata hai net.createConnection se.
+
+Client terminal me likha gaya data → server ko bhej diya jata hai.
+
+Jab server se data aata hai → console me print ho jata hai.
+
+Agar server down ho jaye → "Server Lost" print hoga.
+
+📝 Notes / Use Case
+
+Ye setup ek basic TCP chat application ka foundation hai.
+
+Aap chahe to username assign karke messages ko aur readable bana sakte ho.
+
+Agar message ke aage client ka address (socket.remoteAddress) add kar do, to logs aur clear ho jayenge ki kisne likha.
