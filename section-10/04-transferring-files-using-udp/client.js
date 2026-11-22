@@ -44,4 +44,6 @@ readStream.on("end", () => {
 
 socket.on("message", (meesage, remoteServer) => {
   console.log(meesage.toString());
+
+  socket.close();
 });
