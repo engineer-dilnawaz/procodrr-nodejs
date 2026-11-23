@@ -1,0 +1,39 @@
+We can set Header in key-value pair, with seperating them by "\n".
+
+    for Eg. 
+        socket.write("HTTP/1.1\n");
+        socket.write("Access-Control-Allow-Origin: \n");
+        socket.write("Access-Control-Expose-Headers: ");
+        socket.write("\n\n");
+        socket.end("Hello World");
+
+    The content before "\n\n" is called as Response Headers.
+    and the content after it called as Response Data.
+
+-------
+🧾 Understanding HTTP Headers
+🌐 What are HTTP Headers?
+HTTP headers wo extra information hoti hain jo client aur server ke beech exchange hoti hai —
+ye browser ko batati hai data kis format me hai, origin kya hai, extra info kya bhejna hai, etc.
+
+🧩 Example of Manual Header Writing
+❌ Not-so-clean way
+socket.write(HTTP/1.1 200 OKAY
+Access-Control-Allow-Origin:
+Access-Control-Expose-Headers:
+hello:world\n\n);
+Ye ek hi baar me multi-line string bhej raha hai — thoda messy aur error-prone ho sakta hai.
+
+✅ Better way (Clean & Readable)
+socket.write("HTTP/1.1 200 OKAY\n");
+socket.write("Access-Control-Allow-Origin:\n");
+socket.write("Access-Control-Expose-Headers:\n");
+socket.write("hello:world\n\n");
+👉 Ye tarika clean hai — har line ek proper HTTP header field represent karti hai.
+Last me double newline (\n\n) dena important hota hai —
+wo browser ko signal deta hai ki “headers khatam ho gaye, ab body (actual data) aayegi”.
+
+💬 Extra Notes
+Ye headers normally http module khud set karta hai automatically.
+Lekin net module me hume manually likhne padte hain.
+Browser bina sahi headers ke response ignore bhi kar sakta hai.

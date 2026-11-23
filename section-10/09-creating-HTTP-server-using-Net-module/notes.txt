@@ -1,0 +1,201 @@
+HTTP Server using Net Module
+
+    Browser only understand a HTTP response, which is behind the scene a TCP request.
+
+    Chrome Brwoser expects for "HTTP\n\n" is reponse.
+    but in case of firefox it doesn't require.
+
+    But the correct syntax of writing it is:
+    socket.end("HTTP/1.1\n\nHello World");
+
+    If the given HTTP version is not available it will fallback to default version
+
+    Browsers are capable of understanding and handling streams.
+
+    Chrome downloads the video, but firefox plays it.
+
+----
+
+My Code:
+import { createReadStream } from "node:fs";
+import net from "node:net";
+
+// Ye code actually ek low-level HTTP-like file server hai jo net module (raw TCP) use karke client ko ek image file (river.webp) bhej raha hai — bina http module ke.
+
+const server = net.createServer((socket) => {
+// Ye line client ko thoda sa data send karti hai — basically ek HTTP-like response header.
+socket.write("HTTP/1.1\n\n");
+
+const readStream = createReadStream("river.webp");
+
+// pipe() ka matlab:
+// “Is stream ka output, directly dusre stream ke input me bhej do.”
+readStream.pipe(socket);
+readStream.on("end", () => {
+console.log("File ended");
+});
+
+socket.on("data", (chunk) => {
+console.log(chunk.toString());
+});
+
+socket.on("close", () => {
+console.log(socket.remoteAddress, ": Client disconnected");
+});
+
+socket.on("error", () => {
+console.log("Client Lost");
+});
+console.log("Client Connected", socket.remoteAddress);
+});
+
+server.listen(4000, "0.0.0.0", () => {
+console.log("Server started on port 4000");
+});
+
+
+
+
+🌐 Creating HTTP Server using net Module
+🧠 Concept Overview
+Normally hum http module se web servers banate hain, lekin net module se hum raw TCP-based HTTP-like server bana sakte hain.
+Iska matlab — bina http ke hum manually client ko data bhej rahe hain jaise ek browser request handle kar raha ho.
+
+⚙️ Code Explanation
+1️⃣ Server Creation
+
+import net from "node:net";
+import { createReadStream } from "node:fs";
+const server = net.createServer((socket) => { ... });
+net.createServer() ek TCP server banata hai.
+Har connected client ke liye ek socket milta hai (communication channel).
+
+2️⃣ Sending HTTP-like Response
+socket.write("HTTP/1.1\n\n");
+Ye ek fake HTTP header bhejta hai (sirf demonstration ke liye).
+Normally HTTP header me content-type, length, etc. hota hai —
+yahan sirf ek minimal “HTTP/1.1” likha gaya hai taaki browser confuse na ho.
+
+3️⃣ Sending File Data via Streams
+const readStream = createReadStream("river.webp");
+readStream.pipe(socket);
+pipe() ka matlab hota hai:
+➡️ “Is file stream ka output directly socket me bhej do.”
+Yaani bina manually chunks bheje, file ke har data packet client tak pohonch jata hai.
+
+4️⃣ Handling Events
+
+readStream.on("end", () => 
+console.log("File ended"));
+
+socket.on("data", (chunk) => console.log(chunk.toString()));
+
+socket.on("close", () => 
+console.log("Client disconnected"));
+
+socket.on("error", () => 
+console.log("Client Lost"));
+data → Client ne kuch bheja
+end → File send complete
+close → Client disconnect
+error → Connection error
+
+5️⃣ Listening on Port
+server.listen(4000, "0.0.0.0", () => {  console.log("Server started on port 4000");});
+Ye server ko port 4000 pe start karta hai (accessible from all network interfaces).
+
+💡 Real-World Analogy
+Socho jaise tumhare paas ek pipeline hai —
+File stream paani bhej raha hai (data)
+Socket dusre end pe tank hai (client)
+pipe() dono ko connect kar deta hai 💧
+
+⚠️ Note
+Browser UDP nahi samajhta, lekin TCP (HTTP) samajhta hai — isliye ye code browser me chal sakta hai.
+Ye real HTTP server nahi hai, par HTTP ke basics samjhne ke liye best low-level demo hai.
+
+
+---
+
+
+in my system i had streamed two different extentions videos one mkv which plays in the browser and the other is mp4 which downloads.
+1️⃣ The situation
+
+You have two files:
+
+File	Behavior in your browser
+MKV	Plays in browser (no seeking)
+MP4	Downloads instead of playing
+2️⃣ The key reason
+
+It’s not just the extension, it’s how the browser interprets your server’s response:
+
+Your server is sending invalid HTTP headers:
+
+HTTP/1.1\n\n
+(binary data)
+
+
+No proper headers like:
+
+200 OK
+Content-Type: video/mp4
+Content-Length: ...
+Accept-Ranges: bytes
+
+
+Chrome then goes into “guess mode” (content sniffing) to decide whether to play or download.
+
+3️⃣ Why MKV plays
+
+Even though MKV is not officially supported by browsers, your system likely has:
+
+System codecs installed (VLC, K-Lite, etc.)
+
+OS-level support for MKV
+
+Chrome sees the binary stream, detects it as video, and tries to play it inline.
+
+✅ Result: MKV plays (but no back/forward because no range headers).
+
+4️⃣ Why MP4 downloads
+
+MP4 is a browser-native format, but your server is sending invalid headers, so Chrome is confused:
+
+Without Content-Type: video/mp4 and Content-Length, Chrome cannot guarantee playback.
+
+It chooses the “safer” option → download the file.
+
+So even though MP4 is supported, missing headers force Chrome to download instead of play.
+
+5️⃣ Role of extensions / system
+
+Extensions or OS-level media handlers can override browser decisions.
+
+That’s why the same Chrome can behave differently on different systems.
+
+6️⃣ TL;DR Mental Model
+Factor	MKV	MP4
+Extension support	Poor	Excellent
+System codecs	Present → plays	N/A
+Browser headers	Missing → guess	Missing → guess
+Browser action	Plays (heuristic)	Downloads (safe fallback)
+
+✅ The key: missing headers + system-dependent content sniffing.
+
+✅ Fix for consistent behavior
+
+Send proper headers like:
+
+HTTP/1.1 200 OK\r\n
+Content-Type: video/mp4\r\n
+Content-Length: \r\n
+Accept-Ranges: bytes\r\n
+\r\n
+
+
+Then all browsers on all machines will behave the same:
+
+MP4 → Plays inline
+
+MKV → Either plays (if supported) or downloads
